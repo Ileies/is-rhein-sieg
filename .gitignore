@@ -1,0 +1,22 @@
+node_modules
+
+.*
+!.gitignore
+!.prettierignore
+!.prettierrc
+
+# Output
+/build
+
+# OS
+Thumbs.db
+
+# Env
+!.env.example
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# Local data
+messages/
