@@ -7,18 +7,64 @@
 	import { BUSINESS_NAME, WHATSAPP_HREF } from '$lib/constants';
 
 	let { children, data } = $props();
+
+	const ogLocaleMap: Record<string, string> = { de: 'de_DE', en: 'en_US', tr: 'tr_TR' };
+
+	const ogLocale = $derived(ogLocaleMap[data.locale] ?? 'de_DE');
+	const ogLocaleAlternates = $derived(Object.values(ogLocaleMap).filter((v) => v !== ogLocale));
+
+	const pageNames: Record<string, string> = {
+		leistungen: 'Leistungen',
+		kontakt: 'Kontakt',
+		referenzen: 'Referenzen',
+		'ueber-uns': 'Über uns',
+		impressum: 'Impressum',
+		datenschutz: 'Datenschutz'
+	};
+
+	const breadcrumbSchema = $derived.by(() => {
+		const { pathname, origin } = page.url;
+		const segments = pathname.split('/').filter(Boolean);
+		if (segments.length === 0) return null;
+
+		const items = [
+			{ '@type': 'ListItem', position: 1, name: 'Startseite', item: `${origin}/` },
+			...segments.map((seg, i) => ({
+				'@type': 'ListItem',
+				position: i + 2,
+				name: pageNames[seg] ?? seg,
+				item: `${origin}/${segments.slice(0, i + 1).join('/')}`
+			}))
+		];
+
+		return JSON.stringify({
+			'@context': 'https://schema.org',
+			'@type': 'BreadcrumbList',
+			itemListElement: items
+		});
+	});
 </script>
 
 <svelte:head>
 	<link rel="canonical" href="{page.url.origin}{page.url.pathname}" />
+	<link rel="alternate" hreflang="de" href="{page.url.origin}{page.url.pathname}" />
+	<link rel="alternate" hreflang="en" href="{page.url.origin}{page.url.pathname}" />
+	<link rel="alternate" hreflang="tr" href="{page.url.origin}{page.url.pathname}" />
+	<link rel="alternate" hreflang="x-default" href="{page.url.origin}{page.url.pathname}" />
 	<meta property="og:url" content="{page.url.origin}{page.url.pathname}" />
 	<meta property="og:type" content="website" />
 	<meta property="og:site_name" content={BUSINESS_NAME} />
 	<meta property="og:image" content="{page.url.origin}/heroinsektanschutz.jpg" />
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="800" />
-	<meta property="og:locale" content="de_DE" />
+	<meta property="og:locale" content={ogLocale} />
+	{#each ogLocaleAlternates as alt}
+		<meta property="og:locale:alternate" content={alt} />
+	{/each}
 	<meta name="twitter:card" content="summary_large_image" />
+	{#if breadcrumbSchema}
+		{@html `<script type="application/ld+json">${breadcrumbSchema}<\/script>`}
+	{/if}
 </svelte:head>
 
 <Header locale={data.locale} />

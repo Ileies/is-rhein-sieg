@@ -48,7 +48,8 @@
 		lst_cta_label, lst_cta_h2, lst_cta_desc,
 		cta_call_now, cta_send_request
 	} from '$lib/messages';
-	import { PHONE } from '$lib/constants';
+	import { page } from '$app/state';
+	import { PHONE, BUSINESS_NAME } from '$lib/constants';
 
 	const anchors = [
 		{ label: lst_anchor_flyscreen(), id: 'fliegengitter' },
@@ -106,6 +107,49 @@
 	];
 
 	const plisseeItems = [lst_plissee_li1(), lst_plissee_li2(), lst_plissee_li3(), lst_plissee_li4()];
+
+	const servicesSchema = $derived(
+		JSON.stringify({
+			'@context': 'https://schema.org',
+			'@type': 'ItemList',
+			name: lst_head_title(),
+			itemListElement: [
+				{
+					'@type': 'ListItem',
+					position: 1,
+					item: {
+						'@type': 'Service',
+						name: lst_flyscreen_title(),
+						description: `${lst_flyscreen_p1()} ${lst_flyscreen_p2()}`,
+						provider: { '@type': 'LocalBusiness', name: BUSINESS_NAME },
+						url: `${page.url.origin}/leistungen#fliegengitter`
+					}
+				},
+				{
+					'@type': 'ListItem',
+					position: 2,
+					item: {
+						'@type': 'Service',
+						name: lst_custom_title(),
+						description: `${lst_custom_p1()} ${lst_custom_p2()}`,
+						provider: { '@type': 'LocalBusiness', name: BUSINESS_NAME },
+						url: `${page.url.origin}/leistungen#fliegengitter-nach-mass`
+					}
+				},
+				{
+					'@type': 'ListItem',
+					position: 3,
+					item: {
+						'@type': 'Service',
+						name: `${lst_sliding_h2_pre()} ${lst_sliding_h2_post()}`,
+						description: `${lst_sliding_p1()} ${lst_sliding_p2()}`,
+						provider: { '@type': 'LocalBusiness', name: BUSINESS_NAME },
+						url: `${page.url.origin}/leistungen#verschiebare-fliegengitter`
+					}
+				}
+			]
+		})
+	);
 </script>
 
 <svelte:head>
@@ -113,6 +157,7 @@
 	<meta name="description" content={lst_head_desc()} />
 	<meta property="og:title" content={lst_head_title()} />
 	<meta property="og:description" content={lst_head_desc()} />
+	{@html `<script type="application/ld+json">${servicesSchema}<\/script>`}
 </svelte:head>
 
 <!-- Hero -->
