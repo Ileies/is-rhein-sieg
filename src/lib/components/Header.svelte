@@ -13,11 +13,11 @@
 	let { locale }: { locale: string } = $props();
 
 	const navLinks = [
-		{ label: nav_home(), href: `/` },
-		{ label: nav_services(), href: `/leistungen` },
-		{ label: nav_references(), href: `/referenzen` },
-		{ label: nav_about(), href: `/ueber-uns` },
-		{ label: nav_contact(), href: `/kontakt` }
+		{ label: nav_home(), href: resolve('/') },
+		{ label: nav_services(), href: resolve('/leistungen') },
+		{ label: nav_references(), href: resolve('/referenzen') },
+		{ label: nav_about(), href: resolve('/ueber-uns') },
+		{ label: nav_contact(), href: resolve('/kontakt') }
 	];
 
 	let mobileOpen = $state(false);
@@ -41,7 +41,7 @@
 			<nav aria-label={nav_aria_main()} class="hidden items-center gap-8 lg:flex">
 				{#each navLinks as { label, href } (href)}
 					<a
-						href={resolve(href)}
+						href={href}
 						class="text-sm font-medium transition-colors {isActive(href)
 							? 'text-primary'
 							: 'text-muted-foreground hover:text-foreground'}">{label}</a
@@ -83,7 +83,7 @@
 			<nav class="mx-auto flex max-w-315 flex-col px-6 py-4" aria-label={nav_aria_mobile()}>
 				{#each navLinks as { label, href } (href)}
 					<a
-						href={resolve(href)}
+						href={href}
 						onclick={() => (mobileOpen = false)}
 						class="py-2.5 text-sm font-medium transition-colors {isActive(href)
 							? 'text-primary'

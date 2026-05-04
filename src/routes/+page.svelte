@@ -88,19 +88,19 @@
 
 	const products = [
 		{
-			href: `/leistungen#fliegengitter`,
+			href: resolve('/leistungen#fliegengitter'),
 			img: `/references/FliegengitterSanktaugustin-3-scaled.jpeg`,
 			title: home_product_flyscreen_title(),
 			description: home_product_flyscreen_desc()
 		},
 		{
-			href: `/leistungen#fliegengitter-nach-mass`,
+			href: resolve('/leistungen#fliegengitter-nach-mass'),
 			img: `/references/FliegengitterMass-1-scaled.jpeg`,
 			title: home_product_custom_title(),
 			description: home_product_custom_desc()
 		},
 		{
-			href: `/leistungen#verschiebare-fliegengitter`,
+			href: resolve('/leistungen#verschiebare-fliegengitter'),
 			img: `/references/verschiebbareFliegengitter-1-scaled.jpeg`,
 			title: home_product_sliding_title(),
 			description: home_product_sliding_desc()
@@ -261,7 +261,7 @@
 						<h3 class="text-xl font-bold text-foreground">{title}</h3>
 						<p class="flex-1 text-sm leading-relaxed text-muted-foreground">{description}</p>
 						<a
-							href={resolve(href)}
+							href={href}
 							class="inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-colors hover:text-primary/70"
 						>
 							{home_product_cta()} <ArrowRight class="size-3.5" />

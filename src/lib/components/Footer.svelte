@@ -11,11 +11,11 @@
 	import { ADDRESS, PHONE, EMAIL } from '$lib/constants';
 
 	const navLinks = [
-		{ label: nav_home(), href: `/` },
-		{ label: nav_services(), href: `/leistungen` },
-		{ label: nav_references(), href: `/referenzen` },
-		{ label: nav_about(), href: `/ueber-uns` },
-		{ label: nav_contact(), href: `/kontakt` }
+		{ label: nav_home(), href: resolve('/') },
+		{ label: nav_services(), href: resolve('/leistungen') },
+		{ label: nav_references(), href: resolve('/referenzen') },
+		{ label: nav_about(), href: resolve('/ueber-uns') },
+		{ label: nav_contact(), href: resolve('/kontakt') }
 	];
 
 	const year = new Date().getFullYear();
@@ -46,7 +46,7 @@
 						{#each navLinks as { label, href } (href)}
 							<li>
 								<a
-									href={resolve(href)}
+									href={href}
 									class="text-sm text-secondary-foreground transition-colors hover:text-foreground"
 									>{label}</a
 								>
