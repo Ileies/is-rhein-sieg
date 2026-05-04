@@ -2,6 +2,19 @@
 	import { enhance } from '$app/forms';
 	import { Mail, MapPin, Phone } from '@lucide/svelte';
 	import type { PageProps } from './$types';
+	import {
+		ko_head_title, ko_head_desc,
+		ko_hero_label, ko_hero_h1_pre, ko_hero_h1_post, ko_hero_desc,
+		ko_info_label, ko_info_h2, ko_info_p,
+		ko_form_title, ko_form_success_title, ko_form_success_desc,
+		ko_field_name, ko_field_name_placeholder,
+		ko_field_phone, ko_field_phone_placeholder,
+		ko_field_email, ko_field_email_placeholder,
+		ko_field_message, ko_field_message_placeholder,
+		ko_submit, ko_submitting, ko_privacy_note,
+		label_phone, label_email_contact, label_address
+	} from '$lib/messages';
+	import { ADDRESS, PHONE, EMAIL } from '$lib/constants';
 
 	let { form }: PageProps = $props();
 
@@ -9,29 +22,22 @@
 </script>
 
 <svelte:head>
-	<title>Kontakt – Insektenschutz Rhein-Sieg</title>
-	<meta
-		name="description"
-		content="Kontaktieren Sie Insektenschutz Rhein-Sieg in Sankt Augustin. Kostenlose Beratung zu Fliegengittern und Insektenschutz – rufen Sie uns an oder schreiben Sie uns."
-	/>
-	<meta property="og:title" content="Kontakt – Insektenschutz Rhein-Sieg" />
-	<meta
-		property="og:description"
-		content="Kontaktieren Sie Insektenschutz Rhein-Sieg in Sankt Augustin. Kostenlose Beratung zu Fliegengittern und Insektenschutz – rufen Sie uns an oder schreiben Sie uns."
-	/>
+	<title>{ko_head_title()}</title>
+	<meta name="description" content={ko_head_desc()} />
+	<meta property="og:title" content={ko_head_title()} />
+	<meta property="og:description" content={ko_head_desc()} />
 </svelte:head>
 
 <!-- Hero -->
 <section class="dark bg-background text-foreground">
 	<div class="mx-auto max-w-315 px-6 py-20 md:py-28">
-		<p class="mb-4 text-sm font-semibold tracking-widest text-primary uppercase">Kontakt</p>
+		<p class="mb-4 text-sm font-semibold tracking-widest text-primary uppercase">{ko_hero_label()}</p>
 		<h1 class="mb-4 text-4xl font-bold tracking-tight md:text-5xl">
-			Sie haben Fragen?<br />
-			<span class="text-primary">Wir beraten kostenlos!</span>
+			{ko_hero_h1_pre()}<br />
+			<span class="text-primary">{ko_hero_h1_post()}</span>
 		</h1>
 		<p class="max-w-xl text-lg leading-relaxed text-secondary-foreground">
-			Sie sind sich unsicher, welches Insektengitter am besten zu Ihren Bedürfnissen passt? Wir
-			helfen Ihnen gerne weiter!
+			{ko_hero_desc()}
 		</p>
 	</div>
 </section>
@@ -44,15 +50,13 @@
 			<div class="space-y-10">
 				<div>
 					<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">
-						Unverbindlich anfragen
+						{ko_info_label()}
 					</p>
 					<h2 class="mb-4 text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-						Gemeinsam finden wir die perfekte Lösung
+						{ko_info_h2()}
 					</h2>
 					<p class="leading-relaxed text-muted-foreground">
-						Unser Expertenteam bietet Ihnen eine unverbindliche und kostenlose Beratung zu den
-						besten Lösungen für Ihre Fenster, Wintergärten und Dachfenster. Gemeinsam finden wir die
-						perfekte Lösung, um Ihr Zuhause insektenfrei zu halten.
+						{ko_info_p()}
 					</p>
 				</div>
 
@@ -60,7 +64,7 @@
 					<li>
 						<a
 							class="group flex items-start gap-4 transition-opacity hover:opacity-80"
-							href="tel:+4915565097031"
+							href={PHONE.href}
 						>
 							<span
 								class="mt-0.5 flex size-10 shrink-0 items-center justify-center bg-primary/10 text-primary"
@@ -71,16 +75,16 @@
 								<p
 									class="mb-0.5 text-xs font-semibold tracking-widest text-muted-foreground uppercase"
 								>
-									Telefon
+									{label_phone()}
 								</p>
-								<p class="font-medium text-foreground">015565 097031</p>
+								<p class="font-medium text-foreground">{PHONE.display}</p>
 							</div>
 						</a>
 					</li>
 					<li>
 						<a
 							class="group flex items-start gap-4 transition-opacity hover:opacity-80"
-							href="mailto:info@insektenschutz-rhein-sieg.de"
+							href="mailto:{EMAIL}"
 						>
 							<span
 								class="mt-0.5 flex size-10 shrink-0 items-center justify-center bg-primary/10 text-primary"
@@ -91,9 +95,9 @@
 								<p
 									class="mb-0.5 text-xs font-semibold tracking-widest text-muted-foreground uppercase"
 								>
-									E-Mail
+									{label_email_contact()}
 								</p>
-								<p class="font-medium text-foreground">info@insektenschutz-rhein-sieg.de</p>
+								<p class="font-medium text-foreground">{EMAIL}</p>
 							</div>
 						</a>
 					</li>
@@ -107,9 +111,9 @@
 							<p
 								class="mb-0.5 text-xs font-semibold tracking-widest text-muted-foreground uppercase"
 							>
-								Adresse
+								{label_address()}
 							</p>
-							<p class="font-medium text-foreground">Ringstr. 7, 53757 Sankt Augustin</p>
+							<p class="font-medium text-foreground">{ADDRESS.full}</p>
 						</div>
 					</li>
 				</ul>
@@ -124,13 +128,13 @@
 						>
 							✓
 						</span>
-						<h3 class="mb-2 text-xl font-bold text-foreground">Nachricht erhalten!</h3>
+						<h3 class="mb-2 text-xl font-bold text-foreground">{ko_form_success_title()}</h3>
 						<p class="text-muted-foreground">
-							Vielen Dank für Ihre Anfrage. Wir melden uns schnellstmöglich bei Ihnen.
+							{ko_form_success_desc()}
 						</p>
 					</div>
 				{:else}
-					<h2 class="mb-6 text-xl font-bold text-foreground">Nachricht senden</h2>
+					<h2 class="mb-6 text-xl font-bold text-foreground">{ko_form_title()}</h2>
 
 					{#if form?.errors?._}
 						<p class="mb-4 text-sm text-destructive">{form.errors._}</p>
@@ -150,7 +154,7 @@
 						<div class="grid gap-5 sm:grid-cols-2">
 							<div>
 								<label for="name" class="mb-1.5 block text-sm font-medium text-foreground">
-									Name <span class="text-destructive">*</span>
+									{ko_field_name()} <span class="text-destructive">*</span>
 								</label>
 								<input
 									id="name"
@@ -163,7 +167,7 @@
 										?.errors?.name
 										? 'border-destructive'
 										: ''}"
-									placeholder="Ihr Name"
+									placeholder={ko_field_name_placeholder()}
 								/>
 								{#if form?.errors?.name}
 									<p class="mt-1 text-xs text-destructive">{form.errors.name}</p>
@@ -172,7 +176,7 @@
 
 							<div>
 								<label for="phone" class="mb-1.5 block text-sm font-medium text-foreground">
-									Telefon
+									{ko_field_phone()}
 								</label>
 								<input
 									id="phone"
@@ -181,14 +185,14 @@
 									autocomplete="tel"
 									value={form?.values?.phone ?? ''}
 									class="w-full border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:ring-1 focus:ring-primary focus:outline-none"
-									placeholder="Ihre Telefonnummer"
+									placeholder={ko_field_phone_placeholder()}
 								/>
 							</div>
 						</div>
 
 						<div>
 							<label for="email" class="mb-1.5 block text-sm font-medium text-foreground">
-								E-Mail <span class="text-destructive">*</span>
+								{ko_field_email()} <span class="text-destructive">*</span>
 							</label>
 							<input
 								id="email"
@@ -201,7 +205,7 @@
 									?.errors?.email
 									? 'border-destructive'
 									: ''}"
-								placeholder="ihre@email.de"
+								placeholder={ko_field_email_placeholder()}
 							/>
 							{#if form?.errors?.email}
 								<p class="mt-1 text-xs text-destructive">{form.errors.email}</p>
@@ -210,7 +214,7 @@
 
 						<div>
 							<label for="message" class="mb-1.5 block text-sm font-medium text-foreground">
-								Nachricht <span class="text-destructive">*</span>
+								{ko_field_message()} <span class="text-destructive">*</span>
 							</label>
 							<textarea
 								id="message"
@@ -221,7 +225,7 @@
 									?.errors?.message
 									? 'border-destructive'
 									: ''}"
-								placeholder="Beschreiben Sie kurz Ihr Anliegen…"
+								placeholder={ko_field_message_placeholder()}
 								>{form?.values?.message ?? ''}</textarea
 							>
 							{#if form?.errors?.message}
@@ -234,12 +238,11 @@
 							disabled={submitting}
 							class="w-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
 						>
-							{submitting ? 'Wird gesendet…' : 'Nachricht senden'}
+							{submitting ? ko_submitting() : ko_submit()}
 						</button>
 
 						<p class="text-xs text-muted-foreground">
-							Mit dem Absenden stimmen Sie zu, dass Ihre Daten zur Bearbeitung Ihrer Anfrage
-							verwendet werden.
+							{ko_privacy_note()}
 						</p>
 					</form>
 				{/if}

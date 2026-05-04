@@ -1,5 +1,9 @@
+<script lang="ts">
+	import { BUSINESS_NAME, OWNER_NAME, ADDRESS, PHONE_ALT, EMAIL } from '$lib/constants';
+</script>
+
 <svelte:head>
-	<title>Datenschutzerklärung – Insektenschutz Rhein-Sieg</title>
+	<title>Datenschutzerklärung – {BUSINESS_NAME}</title>
 	<meta
 		name="description"
 		content="Datenschutzerklärung von Insektenschutz Rhein-Sieg gemäß DSGVO."
@@ -26,34 +30,34 @@
 				<div class="divide-y divide-border border border-border">
 					<div class="grid gap-1 px-5 py-4 sm:grid-cols-[10rem_1fr]">
 						<span class="text-sm text-muted-foreground">Name</span>
-						<span class="text-sm font-medium text-foreground">Taner Özyurt</span>
+						<span class="text-sm font-medium text-foreground">{OWNER_NAME}</span>
 					</div>
 					<div class="grid gap-1 px-5 py-4 sm:grid-cols-[10rem_1fr]">
 						<span class="text-sm text-muted-foreground">Unternehmen</span>
-						<span class="text-sm font-medium text-foreground">Insektenschutz Rhein-Sieg</span>
+						<span class="text-sm font-medium text-foreground">{BUSINESS_NAME}</span>
 					</div>
 					<div class="grid gap-1 px-5 py-4 sm:grid-cols-[10rem_1fr]">
 						<span class="text-sm text-muted-foreground">Anschrift</span>
 						<span class="text-sm font-medium text-foreground">
-							Ringstr. 7<br />53757 Sankt Augustin
+							{ADDRESS.street}<br />{ADDRESS.zip} {ADDRESS.city}
 						</span>
 					</div>
 					<div class="grid gap-1 px-5 py-4 sm:grid-cols-[10rem_1fr]">
 						<span class="text-sm text-muted-foreground">Telefon</span>
 						<a
-							href="tel:+4917661646603"
+							href={PHONE_ALT.href}
 							class="text-sm font-medium text-primary transition-colors hover:text-primary/70"
 						>
-							0176 61646603
+							{PHONE_ALT.display}
 						</a>
 					</div>
 					<div class="grid gap-1 px-5 py-4 sm:grid-cols-[10rem_1fr]">
 						<span class="text-sm text-muted-foreground">E-Mail</span>
 						<a
-							href="mailto:info@insektenschutz-rhein-sieg.de"
+							href="mailto:{EMAIL}"
 							class="text-sm font-medium text-primary transition-colors hover:text-primary/70"
 						>
-							info@insektenschutz-rhein-sieg.de
+							{EMAIL}
 						</a>
 					</div>
 				</div>

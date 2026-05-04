@@ -14,138 +14,105 @@
 		Building2
 	} from '@lucide/svelte';
 	import { resolve } from '$app/paths';
+	import {
+		lst_head_title, lst_head_desc,
+		lst_hero_label, lst_hero_h1_pre, lst_hero_h1_mid, lst_hero_h1_post, lst_hero_desc,
+		lst_quicknav_aria,
+		lst_anchor_flyscreen, lst_anchor_custom, lst_anchor_sliding,
+		lst_products_label, lst_products_h2, lst_details,
+		lst_flyscreen_product_label, lst_flyscreen_badge, lst_flyscreen_title,
+		lst_flyscreen_p1, lst_flyscreen_p2, lst_flyscreen_variants_label,
+		lst_flyscreen_v1, lst_flyscreen_v2, lst_flyscreen_v3, lst_flyscreen_v4, lst_flyscreen_v5,
+		lst_flyscreen_cta,
+		lst_custom_product_label, lst_custom_title, lst_custom_p1, lst_custom_p2,
+		lst_custom_areas_label, lst_custom_a1, lst_custom_a2, lst_custom_a3, lst_custom_a4, lst_custom_a5,
+		lst_custom_cta,
+		lst_plissee_type_label, lst_plissee_title, lst_plissee_p1, lst_plissee_p2,
+		lst_plissee_li1, lst_plissee_li2, lst_plissee_li3, lst_plissee_li4,
+		lst_sliding_product_label, lst_sliding_badge, lst_sliding_h2_pre, lst_sliding_h2_post,
+		lst_sliding_p1, lst_sliding_p2, lst_sliding_fits_label,
+		lst_sliding_f1, lst_sliding_f2, lst_sliding_f3, lst_sliding_f4, lst_sliding_f5,
+		lst_sliding_cta1, lst_sliding_cta2,
+		lst_materials_label, lst_materials_h2_pre, lst_materials_h2_post, lst_materials_desc,
+		lst_mat_alu_title, lst_mat_alu_desc,
+		lst_mat_fiber_title, lst_mat_fiber_desc,
+		lst_mat_steel_title, lst_mat_steel_desc,
+		lst_mat_pollen_title, lst_mat_pollen_desc,
+		lst_mat_pet_title, lst_mat_pet_desc,
+		lst_mat_drill_title, lst_mat_drill_desc,
+		lst_target_private_title, lst_target_private_desc,
+		lst_target_business_title, lst_target_business_desc,
+		lst_process_label, lst_process_h2,
+		lst_step1_title, lst_step1_desc, lst_step2_title, lst_step2_desc,
+		lst_step3_title, lst_step3_desc, lst_step4_title, lst_step4_desc,
+		lst_cta_label, lst_cta_h2, lst_cta_desc,
+		cta_call_now, cta_send_request
+	} from '$lib/messages';
+	import { PHONE } from '$lib/constants';
 
 	const anchors = [
-		{ label: 'Fliegengitter', id: 'fliegengitter' },
-		{ label: 'Fliegengitter nach Maß', id: 'fliegengitter-nach-mass' },
-		{ label: 'Verschiebbare Systeme', id: 'verschiebare-fliegengitter' }
+		{ label: lst_anchor_flyscreen(), id: 'fliegengitter' },
+		{ label: lst_anchor_custom(), id: 'fliegengitter-nach-mass' },
+		{ label: lst_anchor_sliding(), id: 'verschiebare-fliegengitter' }
 	];
 
 	const products = [
 		{
 			id: 'fliegengitter',
-			title: 'Fliegengitter',
+			title: lst_flyscreen_title(),
 			img: `/references/FliegengitterSanktaugustin-4-scaled.jpeg`,
-			description:
-				'Zuverlässiger Schutz vor Fliegen und Mücken für Fenster und Türen – als Spannrahmen, Rollo oder Drehtür. Schnell montiert, wartungsarm, langlebig.'
+			description: lst_flyscreen_p1()
 		},
 		{
 			id: 'fliegengitter-nach-mass',
-			title: 'Fliegengitter nach Maß',
+			title: lst_custom_title(),
 			img: `/references/FliegengitterMass-2-scaled.jpeg`,
-			description:
-				'Individuell auf den Millimeter gefertigt – auch bei Sondermaßen, Dachfenstern und schwierigen Einbausituationen. Perfekte Passform, kein Klappern, kein Spalt.'
+			description: lst_custom_p1()
 		},
 		{
 			id: 'verschiebare-fliegengitter',
-			title: 'Verschiebare Fliegengitter',
+			title: `${lst_sliding_h2_pre()} ${lst_sliding_h2_post()}`,
 			img: `/references/verschiebbareFliegengitter-2-scaled.jpeg`,
-			description:
-				'Laufruhige Schiebesysteme für große Terrassentüren, Hebe-Schiebetüren und Wintergärten. Mehrere Meter Breite kein Problem – maßgefertigt für Ihre Öffnung.'
+			description: lst_sliding_p1()
 		}
 	];
 
 	const materials = [
-		{
-			icon: Layers,
-			title: 'Aluminiumrahmen',
-			description:
-				'Leicht, stabil und witterungsbeständig. Erhältlich in verschiedenen Farben und Oberflächen.'
-		},
-		{
-			icon: Shield,
-			title: 'Fiberglas-Gewebe',
-			description:
-				'Besonders feinmaschig, UV-beständig und leicht reinigbar. Der Klassiker für Fenster und Türen.'
-		},
-		{
-			icon: Ruler,
-			title: 'Edelstahl-Gewebe',
-			description:
-				'Extrem robust, kratzfest und ideal für stark beanspruchte Bereiche oder Haustierbesitzer.'
-		},
-		{
-			icon: Leaf,
-			title: 'Pollenschutzgewebe',
-			description: 'Bis zu 80 % der Pollen werden zurückgehalten – ideal für Allergiker.'
-		},
-		{
-			icon: Cat,
-			title: 'Haustierlösungen',
-			description:
-				'Kratzfestes Gewebe und optionale Katzenklappe – damit auch Vierbeiner kein Problem sind.'
-		},
-		{
-			icon: Wrench,
-			title: 'Montage ohne Bohren',
-			description:
-				'Mietfreundliche Befestigung möglich – ideal für Mieter und denkmalgeschützte Gebäude.'
-		}
+		{ icon: Layers, title: lst_mat_alu_title(), description: lst_mat_alu_desc() },
+		{ icon: Shield, title: lst_mat_fiber_title(), description: lst_mat_fiber_desc() },
+		{ icon: Ruler, title: lst_mat_steel_title(), description: lst_mat_steel_desc() },
+		{ icon: Leaf, title: lst_mat_pollen_title(), description: lst_mat_pollen_desc() },
+		{ icon: Cat, title: lst_mat_pet_title(), description: lst_mat_pet_desc() },
+		{ icon: Wrench, title: lst_mat_drill_title(), description: lst_mat_drill_desc() }
 	];
 
 	const steps = [
-		{
-			n: '01',
-			title: 'Kostenlose Beratung vor Ort',
-			description:
-				'Wir kommen zu Ihnen nach Hause oder in Ihre Gewerberäume und schauen uns die Situation gemeinsam an – unverbindlich, ohne versteckte Kosten.'
-		},
-		{
-			n: '02',
-			title: 'Präzise Maßnahme',
-			description:
-				'Jedes Maß wird sorgfältig aufgenommen – auf den Millimeter genau. So wird garantiert, dass Ihr Fliegengitter später perfekt sitzt.'
-		},
-		{
-			n: '03',
-			title: 'Individuelle Fertigung',
-			description:
-				'Auf Basis Ihrer Maße wird jedes Produkt einzeln gefertigt. Kein Konfektionsartikel, sondern echte Maßanfertigung aus hochwertigen Materialien.'
-		},
-		{
-			n: '04',
-			title: 'Professionelle Montage',
-			description:
-				'Wir bringen Ihre Fliegengitter fachgerecht an – inklusive Einweisung, Funktionskontrolle und direktem Ansprechpartner bei Fragen.'
-		}
+		{ n: '01', title: lst_step1_title(), description: lst_step1_desc() },
+		{ n: '02', title: lst_step2_title(), description: lst_step2_desc() },
+		{ n: '03', title: lst_step3_title(), description: lst_step3_desc() },
+		{ n: '04', title: lst_step4_title(), description: lst_step4_desc() }
 	];
 
 	const fliegengitterVariants = [
-		'Spannrahmen für Fenster aller Größen',
-		'Dreh- und Pendeltüren für Balkone & Terrassen',
-		'Rollsysteme für Dachfenster und Velux',
-		'Schiebesysteme für große Glasfronten',
-		'Lichtschachtabdeckungen gegen Insekten & Schmutz'
+		lst_flyscreen_v1(), lst_flyscreen_v2(), lst_flyscreen_v3(), lst_flyscreen_v4(), lst_flyscreen_v5()
 	];
 
 	const massVariants = [
-		'Sonderformen und nicht-rechtwinklige Öffnungen',
-		'Dachfenster jeder Marke und Neigung',
-		'Wintergärten und Glasdächer',
-		'Historische Gebäude mit ungewöhnlichen Maßen',
-		'Gewerberäume mit großen Öffnungen'
+		lst_custom_a1(), lst_custom_a2(), lst_custom_a3(), lst_custom_a4(), lst_custom_a5()
 	];
 
 	const verschiebarAdvantages = [
-		'Für Öffnungen von 0,5 bis über 5 Meter Breite',
-		'Ein- und mehrflügelige Konfigurationen',
-		'Laufruhiges, wartungsarmes Schienensystem',
-		'Dezentes Design, verschiedene Farben wählbar',
-		'Langlebig und witterungsbeständig'
+		lst_sliding_f1(), lst_sliding_f2(), lst_sliding_f3(), lst_sliding_f4(), lst_sliding_f5()
 	];
+
+	const plisseeItems = [lst_plissee_li1(), lst_plissee_li2(), lst_plissee_li3(), lst_plissee_li4()];
 </script>
 
 <svelte:head>
-	<title>Leistungen – Insektenschutz Rhein-Sieg</title>
-	<meta
-		name="description"
-		content="Fliegengitter, Maßanfertigung und verschiebbare Systeme von Insektenschutz Rhein-Sieg in Sankt Augustin. Beratung, Fertigung und Montage aus einer Hand."
-	/>
-	<meta property="og:title" content="Leistungen – Insektenschutz Rhein-Sieg" />
-	<meta
-		property="og:description"
-		content="Fliegengitter, Maßanfertigung und verschiebbare Systeme von Insektenschutz Rhein-Sieg in Sankt Augustin. Beratung, Fertigung und Montage aus einer Hand."
-	/>
+	<title>{lst_head_title()}</title>
+	<meta name="description" content={lst_head_desc()} />
+	<meta property="og:title" content={lst_head_title()} />
+	<meta property="og:description" content={lst_head_desc()} />
 </svelte:head>
 
 <!-- Hero -->
@@ -153,18 +120,16 @@
 	<div class="mx-auto max-w-315 px-6 py-20 md:py-28">
 		<div class="grid gap-12 lg:grid-cols-2 lg:items-center">
 			<div>
-				<p class="mb-4 text-sm font-semibold tracking-widest text-primary uppercase">Leistungen</p>
+				<p class="mb-4 text-sm font-semibold tracking-widest text-primary uppercase">{lst_hero_label()}</p>
 				<h1 class="mb-6 max-w-xl text-4xl font-bold tracking-tight md:text-5xl">
-					Maßgefertigter<br />
-					<span class="text-primary">Insektenschutz</span><br />
-					aus einer Hand
+					{lst_hero_h1_pre()}<br />
+					<span class="text-primary">{lst_hero_h1_mid()}</span><br />
+					{lst_hero_h1_post()}
 				</h1>
 				<p class="mb-8 max-w-md text-lg leading-relaxed text-secondary-foreground">
-					Von der kostenlosen Vor-Ort-Beratung bis zur professionellen Montage – alles aus einer
-					Hand. Für Fenster, Türen, Terrassenfronten und Dachfenster in Sankt Augustin und der
-					gesamten Rhein-Sieg-Region.
+					{lst_hero_desc()}
 				</p>
-				<nav aria-label="Leistungen Schnellnavigation" class="flex flex-wrap gap-3">
+				<nav aria-label={lst_quicknav_aria()} class="flex flex-wrap gap-3">
 					{#each anchors as { label, id } (id)}
 						<a
 							href="#{id}"
@@ -204,10 +169,10 @@
 	<div class="mx-auto max-w-315 px-6 py-16 md:py-24">
 		<div class="mb-12">
 			<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">
-				Unsere Produkte
+				{lst_products_label()}
 			</p>
 			<h2 class="max-w-md text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-				Die richtige Lösung für jeden Bedarf
+				{lst_products_h2()}
 			</h2>
 		</div>
 		<div class="grid gap-px bg-border sm:grid-cols-3">
@@ -228,7 +193,7 @@
 							href="#{id}"
 							class="inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-colors hover:text-primary/70"
 						>
-							Details ansehen
+							{lst_details()}
 							<ArrowDown class="size-3.5" />
 						</a>
 					</div>
@@ -250,26 +215,22 @@
 					src="/references/FliegengitterSanktaugustin-6-scaled.jpeg"
 				/>
 				<div class="absolute bottom-0 left-0 bg-primary px-5 py-3">
-					<p class="text-sm font-semibold text-white">Montage in Sankt Augustin</p>
+					<p class="text-sm font-semibold text-white">{lst_flyscreen_badge()}</p>
 				</div>
 			</div>
 			<div>
-				<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">Produkt</p>
+				<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">{lst_flyscreen_product_label()}</p>
 				<h2 class="mb-6 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-					Fliegengitter
+					{lst_flyscreen_title()}
 				</h2>
 				<p class="mb-4 leading-relaxed text-muted-foreground">
-					Schützen Sie Ihr Zuhause zuverlässig vor Fliegen, Mücken und anderen Insekten – ohne auf
-					Frischluft verzichten zu müssen. Unsere Fliegengitter werden passgenau für Ihre Fenster
-					und Türen gefertigt und professionell montiert.
+					{lst_flyscreen_p1()}
 				</p>
 				<p class="mb-8 leading-relaxed text-muted-foreground">
-					Gerade in der Rhein-Sieg-Region, mit ihrer Lage zwischen Flüssen, Feldern und Grünflächen,
-					sorgt ein guter Insektenschutz für echten Mehrwert im Alltag – besonders in den
-					Sommermonaten.
+					{lst_flyscreen_p2()}
 				</p>
 				<p class="mb-4 text-sm font-semibold tracking-widest text-foreground uppercase">
-					Erhältlich als
+					{lst_flyscreen_variants_label()}
 				</p>
 				<ul class="mb-8 space-y-2.5">
 					{#each fliegengitterVariants as item (item)}
@@ -282,10 +243,10 @@
 				<div class="flex flex-wrap gap-3">
 					<a
 						class="inline-flex items-center gap-2 bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
-						href="tel:+4915565097031"
+						href={PHONE.href}
 					>
 						<Phone class="size-4 shrink-0" />
-						Jetzt anfragen
+						{lst_flyscreen_cta()}
 					</a>
 				</div>
 			</div>
@@ -298,24 +259,20 @@
 	<div class="mx-auto max-w-315 px-6 py-16 md:py-28">
 		<div class="grid gap-12 lg:grid-cols-2 lg:items-center">
 			<div>
-				<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">Produkt</p>
+				<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">{lst_custom_product_label()}</p>
 				<h2 class="mb-6 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-					Fliegengitter nach Maß
+					{lst_custom_title()}
 				</h2>
 				<p class="mb-4 leading-relaxed text-muted-foreground">
-					Nicht jedes Fenster ist gleich. Sondermaße, Dachfenster, schräge Öffnungen oder alte
-					Gebäude mit ungewöhnlichen Proportionen – für Standardprodukte aus dem Baumarkt eine echte
-					Herausforderung.
+					{lst_custom_p1()}
 				</p>
 				<p class="mb-6 leading-relaxed text-muted-foreground">
-					Unsere Maßanfertigungen sitzen perfekt: kein Klappern, keine Lücken, kein Kompromiss bei
-					der Optik. Jedes Stück wird auf den Millimeter genau gefertigt und passt sich dem
-					Fensterbild harmonisch an.
+					{lst_custom_p2()}
 				</p>
 
 				<div class="mb-8 border border-border bg-background p-6">
 					<p class="mb-4 text-sm font-semibold tracking-widest text-foreground uppercase">
-						Typische Einsatzbereiche
+						{lst_custom_areas_label()}
 					</p>
 					<ul class="space-y-2.5">
 						{#each massVariants as item (item)}
@@ -331,7 +288,7 @@
 					class="inline-flex items-center gap-2 bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
 					href={resolve('/kontakt')}
 				>
-					Maßanfertigung anfragen
+					{lst_custom_cta()}
 					<ArrowRight class="size-4 shrink-0" />
 				</a>
 			</div>
@@ -360,21 +317,18 @@
 				/>
 			</div>
 			<div>
-				<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">Produkttyp</p>
+				<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">{lst_plissee_type_label()}</p>
 				<h2 class="mb-6 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-					Plissee-Fliegengitter
+					{lst_plissee_title()}
 				</h2>
 				<p class="mb-4 leading-relaxed text-muted-foreground">
-					Plissee-Systeme kombinieren maximalen Komfort mit elegantem Design. Der akkordeonartig
-					gefaltete Gewebestreifen zieht sich beim Öffnen platzsparend zur Seite – ideal für Türen,
-					die täglich mehrfach genutzt werden.
+					{lst_plissee_p1()}
 				</p>
 				<p class="mb-8 leading-relaxed text-muted-foreground">
-					Besonders beliebt für Balkontüren und Terrassenzugänge: kein störendes Rahmenwerk im
-					Blickfeld, freier Durchgang, voller Insektenschutz.
+					{lst_plissee_p2()}
 				</p>
 				<ul class="space-y-2.5">
-					{#each ['Platzsparend – faltet sich vollständig zusammen', 'Keine Bodenschiene notwendig', 'Für Breiten bis ca. 1,60 m als Einzelflügel', 'Als Doppelplissee auch für breitere Öffnungen'] as item (item)}
+					{#each plisseeItems as item (item)}
 						<li class="flex items-start gap-3 text-sm">
 							<Check class="mt-0.5 size-4 shrink-0 text-primary" />
 							<span class="text-foreground">{item}</span>
@@ -398,27 +352,23 @@
 					src="/verschiebaresfleigengitter.jpg"
 				/>
 				<div class="absolute bottom-0 left-0 bg-primary px-5 py-3">
-					<p class="text-sm font-semibold text-white">Laufruhig & maßgefertigt</p>
+					<p class="text-sm font-semibold text-white">{lst_sliding_badge()}</p>
 				</div>
 			</div>
 			<div>
-				<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">Produkt</p>
+				<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">{lst_sliding_product_label()}</p>
 				<h2 class="mb-6 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-					Verschiebbare<br />Fliegengitter
+					{lst_sliding_h2_pre()}<br />{lst_sliding_h2_post()}
 				</h2>
 				<p class="mb-4 leading-relaxed text-muted-foreground">
-					Große Glasfronten und breite Terrassentüren sind klassische Schwachstellen beim
-					Insektenschutz. Verschiebbare Systeme schließen diese Lücke zuverlässig – ohne
-					Komforteinbußen.
+					{lst_sliding_p1()}
 				</p>
 				<p class="mb-8 leading-relaxed text-muted-foreground">
-					Der robuste Aluminiumrahmen mit eingespanntem Insektenschutzgewebe gleitet leise auf einem
-					hochwertigen Schienensystem. Ein- oder mehrflügelig, je nach Öffnungsbreite – wir fertigen
-					exakt nach Ihren Gegebenheiten.
+					{lst_sliding_p2()}
 				</p>
 
 				<p class="mb-4 text-sm font-semibold tracking-widest text-foreground uppercase">
-					Geeignet für
+					{lst_sliding_fits_label()}
 				</p>
 				<ul class="mb-8 space-y-2.5">
 					{#each verschiebarAdvantages as item (item)}
@@ -432,16 +382,16 @@
 				<div class="flex flex-wrap gap-3">
 					<a
 						class="inline-flex items-center gap-2 bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
-						href="tel:+4915565097031"
+						href={PHONE.href}
 					>
 						<Phone class="size-4 shrink-0" />
-						Jetzt anfragen
+						{lst_sliding_cta1()}
 					</a>
 					<a
 						class="inline-flex items-center gap-2 border border-border px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent"
 						href={resolve('/kontakt')}
 					>
-						Anfrage stellen
+						{lst_sliding_cta2()}
 						<ArrowRight class="size-4 shrink-0" />
 					</a>
 				</div>
@@ -455,14 +405,13 @@
 	<div class="mx-auto max-w-315 px-6 py-16 md:py-24">
 		<div class="mb-12 grid gap-8 lg:grid-cols-2 lg:items-end">
 			<div>
-				<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">Qualität</p>
+				<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">{lst_materials_label()}</p>
 				<h2 class="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-					Materialien &<br />Ausstattungsoptionen
+					{lst_materials_h2_pre()}<br />{lst_materials_h2_post()}
 				</h2>
 			</div>
 			<p class="leading-relaxed text-muted-foreground">
-				Wir setzen auf hochwertige Materialien, die langlebig, wartungsarm und optisch ansprechend
-				sind. Je nach Bedarf und Anwendungsfall beraten wir Sie zur optimalen Kombination.
+				{lst_materials_desc()}
 			</p>
 		</div>
 		<div class="grid gap-px bg-border sm:grid-cols-2 lg:grid-cols-3">
@@ -490,10 +439,9 @@
 					<House class="size-4" />
 				</span>
 				<div>
-					<h3 class="mb-2 text-base font-bold text-foreground">Privatkunden</h3>
+					<h3 class="mb-2 text-base font-bold text-foreground">{lst_target_private_title()}</h3>
 					<p class="text-sm leading-relaxed text-muted-foreground">
-						Für Haus- und Wohnungsbesitzer sowie Mieter – mit oder ohne Bohren, für jedes Fenster
-						und jede Tür, auch für Besonderheiten wie Dachfenster oder alte Gebäude.
+						{lst_target_private_desc()}
 					</p>
 				</div>
 			</div>
@@ -504,10 +452,9 @@
 					<Building2 class="size-4" />
 				</span>
 				<div>
-					<h3 class="mb-2 text-base font-bold text-foreground">Gewerbekunden</h3>
+					<h3 class="mb-2 text-base font-bold text-foreground">{lst_target_business_title()}</h3>
 					<p class="text-sm leading-relaxed text-muted-foreground">
-						Für Büros, Gaststätten, Praxen und andere Gewerbeflächen – schnelle Umsetzung auch bei
-						größeren Projekten mit mehreren Fenstern und Türen.
+						{lst_target_business_desc()}
 					</p>
 				</div>
 			</div>
@@ -519,9 +466,9 @@
 <section class="bg-secondary">
 	<div class="mx-auto max-w-315 px-6 py-16 md:py-24">
 		<div class="mb-12">
-			<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">Unser Ablauf</p>
+			<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">{lst_process_label()}</p>
 			<h2 class="max-w-md text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-				Von der Anfrage bis zur fertigen Montage
+				{lst_process_h2()}
 			</h2>
 		</div>
 		<div class="grid gap-px bg-border sm:grid-cols-2 lg:grid-cols-4">
@@ -544,27 +491,26 @@
 		<div class="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
 			<div>
 				<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">
-					Kostenlose Beratung
+					{lst_cta_label()}
 				</p>
-				<h2 class="text-3xl font-bold tracking-tight md:text-4xl">Bereit für Ihren Schutz?</h2>
+				<h2 class="text-3xl font-bold tracking-tight md:text-4xl">{lst_cta_h2()}</h2>
 				<p class="mt-3 max-w-md text-sm leading-relaxed text-secondary-foreground">
-					Wir kommen zu Ihnen, schauen uns alles an und beraten Sie kostenlos und unverbindlich.
-					Rufen Sie uns an oder schreiben Sie uns – wir melden uns schnell zurück.
+					{lst_cta_desc()}
 				</p>
 			</div>
 			<div class="flex shrink-0 flex-col gap-3 sm:flex-row">
 				<a
 					class="inline-flex items-center justify-center gap-2 bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
-					href="tel:+4915565097031"
+					href={PHONE.href}
 				>
 					<Phone class="size-4 shrink-0" />
-					015565 097031
+					{PHONE.display}
 				</a>
 				<a
 					class="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent"
 					href={resolve('/kontakt')}
 				>
-					Anfrage stellen
+					{cta_send_request()}
 					<ArrowRight class="size-4 shrink-0" />
 				</a>
 			</div>

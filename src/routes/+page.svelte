@@ -1,42 +1,51 @@
 <script lang="ts">
 	import { ArrowRight, Check, MapPin, Phone, Ruler, Shield, Wrench } from '@lucide/svelte';
 	import { resolve } from '$app/paths';
+	import {
+		home_hero_h1_pre, home_hero_h1_mid, home_hero_h1_post,
+		home_hero_desc, home_hero_cta_services,
+		home_usp_consultation, home_usp_custom, home_usp_quality, home_usp_service,
+		home_problem_badge, home_problem_label,
+		home_problem_h2_pre, home_problem_h2_post,
+		home_problem_p1, home_problem_p2,
+		home_problem_li1, home_problem_li2, home_problem_li3,
+		home_services_label, home_services_h2,
+		home_product_flyscreen_title, home_product_flyscreen_desc,
+		home_product_custom_title, home_product_custom_desc,
+		home_product_sliding_title, home_product_sliding_desc,
+		home_product_cta,
+		home_about_label, home_about_h2_pre, home_about_h2_post,
+		home_about_p1, home_about_p2, home_about_cta,
+		home_refs_label, home_refs_h2, home_refs_cta,
+		home_cta_label, home_cta_h2, home_cta_desc,
+		cta_call_now, cta_send_email, cta_all_services
+	} from '$lib/messages';
+	import { BUSINESS_NAME, OWNER_NAME, ADDRESS, PHONE, EMAIL, GEO, SERVICE_AREAS } from '$lib/constants';
 	import { page } from '$app/state';
 
 	const localBusinessSchema = $derived({
 		'@context': 'https://schema.org',
 		'@type': 'LocalBusiness',
-		name: 'Insektenschutz Rhein-Sieg',
+		name: BUSINESS_NAME,
 		description:
 			'Maßgefertigte Fliegengitter für Fenster, Türen und Terrassenfronten in Sankt Augustin und dem Rhein-Sieg-Kreis. Kostenlose Vor-Ort-Beratung und Montage aus einer Hand.',
 		url: page.url.origin,
-		telephone: '+4915565097031',
-		email: 'info@insektenschutz-rhein-sieg.de',
+		telephone: PHONE.e164,
+		email: EMAIL,
 		address: {
 			'@type': 'PostalAddress',
-			streetAddress: 'Ringstr. 7',
-			addressLocality: 'Sankt Augustin',
-			postalCode: '53757',
-			addressRegion: 'Nordrhein-Westfalen',
-			addressCountry: 'DE'
+			streetAddress: ADDRESS.street,
+			addressLocality: ADDRESS.city,
+			postalCode: ADDRESS.zip,
+			addressRegion: ADDRESS.state,
+			addressCountry: ADDRESS.countryCode
 		},
 		geo: {
 			'@type': 'GeoCoordinates',
-			latitude: '50.7563',
-			longitude: '7.1844'
+			latitude: String(GEO.lat),
+			longitude: String(GEO.lon)
 		},
-		areaServed: [
-			'Sankt Augustin',
-			'Bonn',
-			'Siegburg',
-			'Troisdorf',
-			'Hennef',
-			'Königswinter',
-			'Bad Honnef',
-			'Niederkassel',
-			'Lohmar',
-			'Neunkirchen-Seelscheid'
-		],
+		areaServed: [...SERVICE_AREAS],
 		hasOfferCatalog: {
 			'@type': 'OfferCatalog',
 			name: 'Insektenschutz',
@@ -71,35 +80,34 @@
 	});
 
 	const usps = [
-		{ icon: Check, label: 'Kostenlose Vor-Ort-Beratung' },
-		{ icon: Ruler, label: 'Maßanfertigung auf den Millimeter' },
-		{ icon: Shield, label: 'Hochwertige Materialien' },
-		{ icon: Wrench, label: 'Montage & Reparaturservice' }
+		{ icon: Check, label: home_usp_consultation() },
+		{ icon: Ruler, label: home_usp_custom() },
+		{ icon: Shield, label: home_usp_quality() },
+		{ icon: Wrench, label: home_usp_service() }
 	];
 
 	const products = [
 		{
 			href: `/leistungen#fliegengitter`,
 			img: `/references/FliegengitterSanktaugustin-3-scaled.jpeg`,
-			title: 'Fliegengitter',
-			description:
-				'Zuverlässiger Schutz vor Fliegen und Mücken für Fenster und Türen – als Spannrahmen, Rollo oder Drehtür.'
+			title: home_product_flyscreen_title(),
+			description: home_product_flyscreen_desc()
 		},
 		{
 			href: `/leistungen#fliegengitter-nach-mass`,
 			img: `/references/FliegengitterMass-1-scaled.jpeg`,
-			title: 'Fliegengitter nach Maß',
-			description:
-				'Individuell gefertigt für Sondermaße, Dachfenster und schwierige Einbausituationen. Perfekte Passform, kein Klappern.'
+			title: home_product_custom_title(),
+			description: home_product_custom_desc()
 		},
 		{
 			href: `/leistungen#verschiebare-fliegengitter`,
 			img: `/references/verschiebbareFliegengitter-1-scaled.jpeg`,
-			title: 'Verschiebare Fliegengitter',
-			description:
-				'Schiebesysteme für große Terrassentüren, Wintergärten und Hebe-Schiebetüren. Laufruhig und maßgefertigt.'
+			title: home_product_sliding_title(),
+			description: home_product_sliding_desc()
 		}
-	] as const;
+	];
+
+	const problemItems = [home_problem_li1(), home_problem_li2(), home_problem_li3()];
 
 	const referencePreview = [
 		{
@@ -122,12 +130,12 @@
 </script>
 
 <svelte:head>
-	<title>Fliegengitter Sankt Augustin – Insektenschutz Rhein-Sieg</title>
+	<title>Fliegengitter {ADDRESS.city} – {BUSINESS_NAME}</title>
 	<meta
 		name="description"
 		content="Maßgefertigte Fliegengitter & Insektenschutz in Sankt Augustin. Kostenlose Vor-Ort-Beratung, präzise Maßanfertigung und Montage im Rhein-Sieg-Kreis aus einer Hand."
 	/>
-	<meta property="og:title" content="Fliegengitter Sankt Augustin – Insektenschutz Rhein-Sieg" />
+	<meta property="og:title" content="Fliegengitter {ADDRESS.city} – {BUSINESS_NAME}" />
 	<meta
 		property="og:description"
 		content="Maßgefertigte Fliegengitter & Insektenschutz in Sankt Augustin. Kostenlose Vor-Ort-Beratung, präzise Maßanfertigung und Montage im Rhein-Sieg-Kreis aus einer Hand."
@@ -152,27 +160,26 @@
 		<h1
 			class="mb-6 max-w-2xl text-4xl leading-tight font-bold tracking-tight text-white md:text-5xl lg:text-6xl"
 		>
-			Ihr Experte für<br />
-			<span class="text-primary">Insektenschutz</span><br />
-			und Fliegengitter
+			{home_hero_h1_pre()}<br />
+			<span class="text-primary">{home_hero_h1_mid()}</span><br />
+			{home_hero_h1_post()}
 		</h1>
 		<p class="mb-10 max-w-xl text-lg leading-relaxed text-white/80">
-			Hochwertige, maßgefertigte Fliegengitter für Ihr Zuhause oder Ihre Gewerberäume – von der
-			Beratung bis zur Montage aus einer Hand.
+			{home_hero_desc()}
 		</p>
 		<div class="flex flex-wrap gap-4">
 			<a
-				href="tel:+4915565097031"
+				href={PHONE.href}
 				class="inline-flex items-center gap-2 bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
 			>
 				<Phone class="size-4 shrink-0" />
-				Jetzt anrufen
+				{cta_call_now()}
 			</a>
 			<a
 				href={resolve('/leistungen')}
 				class="inline-flex items-center gap-2 border border-white/40 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white hover:bg-white/10"
 			>
-				Leistungen ansehen
+				{home_hero_cta_services()}
 				<ArrowRight class="size-4 shrink-0" />
 			</a>
 		</div>
@@ -207,25 +214,18 @@
 					loading="lazy"
 				/>
 				<div class="absolute bottom-0 left-0 bg-primary px-5 py-3">
-					<p class="text-sm font-semibold text-white">Ohne Schutz keine Ruhe.</p>
+					<p class="text-sm font-semibold text-white">{home_problem_badge()}</p>
 				</div>
 			</div>
 			<div>
-				<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">Das Problem</p>
+				<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">{home_problem_label()}</p>
 				<h2 class="mb-6 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-					Der Sommer in der<br />Rhein-Sieg-Region
+					{home_problem_h2_pre()}<br />{home_problem_h2_post()}
 				</h2>
-				<p class="mb-6 leading-relaxed text-muted-foreground">
-					Die Lage zwischen Rhein, Sieg, Feldern und Grünflächen macht Sankt Augustin und den
-					Rhein-Sieg-Kreis besonders attraktiv – aber auch zu einem Paradies für Mücken und Fliegen.
-					Sobald es warm wird, sind offene Fenster und Türen die Haupteinfallstore.
-				</p>
-				<p class="mb-8 leading-relaxed text-muted-foreground">
-					Professioneller Insektenschutz schafft dauerhaft Abhilfe – unauffällig und ohne
-					Komfortverlust. Wir beraten Sie kostenlos vor Ort und fertigen die Lösung exakt nach Maß.
-				</p>
+				<p class="mb-6 leading-relaxed text-muted-foreground">{home_problem_p1()}</p>
+				<p class="mb-8 leading-relaxed text-muted-foreground">{home_problem_p2()}</p>
 				<ul class="space-y-3">
-					{#each ['Für Fenster, Türen, Terrassenfronten & Dachfenster', 'Für Mieter: Montage ohne Bohren möglich', 'Optionen für Allergiker & Haustierbesitzer'] as item (item)}
+					{#each problemItems as item (item)}
 						<li class="flex items-start gap-3 text-sm">
 							<Check class="mt-0.5 size-4 shrink-0 text-primary" />
 							<span class="text-foreground">{item}</span>
@@ -241,9 +241,9 @@
 <section class="bg-secondary">
 	<div class="mx-auto max-w-315 px-6 py-16 md:py-28">
 		<div class="mb-12">
-			<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">Leistungen</p>
+			<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">{home_services_label()}</p>
 			<h2 class="max-w-md text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-				Maßgeschneiderte Lösungen für jeden Bedarf
+				{home_services_h2()}
 			</h2>
 		</div>
 		<div class="grid gap-px bg-border sm:grid-cols-3">
@@ -264,7 +264,7 @@
 							href={resolve(href)}
 							class="inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-colors hover:text-primary/70"
 						>
-							Mehr erfahren <ArrowRight class="size-3.5" />
+							{home_product_cta()} <ArrowRight class="size-3.5" />
 						</a>
 					</div>
 				</article>
@@ -275,7 +275,7 @@
 				href={resolve('/leistungen')}
 				class="inline-flex items-center gap-2 border border-border px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent"
 			>
-				Alle Leistungen im Überblick
+				{cta_all_services()}
 				<ArrowRight class="size-4 shrink-0" />
 			</a>
 		</div>
@@ -287,30 +287,25 @@
 	<div class="mx-auto max-w-315 px-6 py-16 md:py-28">
 		<div class="grid gap-12 lg:grid-cols-2 lg:items-center">
 			<div>
-				<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">Über uns</p>
+				<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">{home_about_label()}</p>
 				<h2 class="mb-6 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-					Persönlicher Service,<br />handwerkliche Qualität
+					{home_about_h2_pre()}<br />{home_about_h2_post()}
 				</h2>
 				<p class="mb-5 leading-relaxed text-muted-foreground">
-					Insektenschutz Rhein-Sieg ist ein inhabergeführter Fachbetrieb aus Sankt Augustin. Inhaber <strong
-						class="text-foreground">Taner Özyurt</strong
-					> berät Sie persönlich vor Ort, nimmt selbst Maß und sorgt für eine fachgerechte Montage – ohne
-					Umwege, ohne Callcenter.
+					{home_about_p1({ owner: OWNER_NAME })}
 				</p>
 				<p class="mb-8 leading-relaxed text-muted-foreground">
-					Als regionaler Betrieb kennen wir die Gegebenheiten in Sankt Augustin und dem gesamten
-					Rhein-Sieg-Kreis. Kurze Wege, schnelle Termine und eine direkte Ansprechperson – das ist
-					unser Versprechen.
+					{home_about_p2()}
 				</p>
 				<div class="mb-8 flex items-center gap-3">
 					<MapPin class="size-4 shrink-0 text-primary" />
-					<span class="text-sm text-muted-foreground">Ringstr. 7, 53757 Sankt Augustin</span>
+					<span class="text-sm text-muted-foreground">{ADDRESS.full}</span>
 				</div>
 				<a
 					href={resolve('/ueber-uns')}
 					class="inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-colors hover:text-primary/70"
 				>
-					Mehr über uns erfahren <ArrowRight class="size-3.5" />
+					{home_about_cta()} <ArrowRight class="size-3.5" />
 				</a>
 			</div>
 			<div class="overflow-hidden">
@@ -330,16 +325,16 @@
 	<div class="mx-auto max-w-315 px-6 py-16 md:py-28">
 		<div class="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 			<div>
-				<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">Referenzen</p>
+				<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">{home_refs_label()}</p>
 				<h2 class="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-					Unsere Arbeiten in der Praxis
+					{home_refs_h2()}
 				</h2>
 			</div>
 			<a
 				href={resolve('/referenzen')}
 				class="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-primary transition-colors hover:text-primary/70"
 			>
-				Alle Referenzen ansehen <ArrowRight class="size-3.5" />
+				{home_refs_cta()} <ArrowRight class="size-3.5" />
 			</a>
 		</div>
 		<div class="grid grid-cols-2 gap-1 lg:grid-cols-4">
@@ -369,27 +364,26 @@
 		<div class="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
 			<div>
 				<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">
-					Kostenlose Beratung
+					{home_cta_label()}
 				</p>
-				<h2 class="text-3xl font-bold tracking-tight md:text-4xl">Bereit für mehr Wohnqualität?</h2>
+				<h2 class="text-3xl font-bold tracking-tight md:text-4xl">{home_cta_h2()}</h2>
 				<p class="mt-3 max-w-md text-sm leading-relaxed text-secondary-foreground">
-					Wir kommen zu Ihnen, messen kostenlos aus und beraten Sie unverbindlich. Rufen Sie uns
-					einfach an oder schreiben Sie uns.
+					{home_cta_desc()}
 				</p>
 			</div>
 			<div class="flex shrink-0 flex-col gap-3 sm:flex-row">
 				<a
-					href="tel:+4915565097031"
+					href={PHONE.href}
 					class="inline-flex items-center justify-center gap-2 bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
 				>
 					<Phone class="size-4 shrink-0" />
-					015565 097031
+					{PHONE.display}
 				</a>
 				<a
-					href="mailto:info@insektenschutz-rhein-sieg.de"
+					href="mailto:{EMAIL}"
 					class="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent"
 				>
-					E-Mail schreiben
+					{cta_send_email()}
 				</a>
 			</div>
 		</div>

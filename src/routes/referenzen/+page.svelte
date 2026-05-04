@@ -2,107 +2,121 @@
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import { Phone, X, ChevronLeft, ChevronRight } from '@lucide/svelte';
 	import { resolve } from '$app/paths';
+	import {
+		ref_head_title, ref_head_desc,
+		ref_hero_label, ref_hero_h1_pre, ref_hero_h1_post, ref_hero_desc,
+		ref_cat_all, ref_cat_sliding, ref_cat_custom, ref_cat_flyscreen, ref_cat_sanktaugustin,
+		ref_img_expand, ref_img_project,
+		ref_count, ref_count_one,
+		ref_lightbox_aria, ref_lightbox_close, ref_lightbox_prev, ref_lightbox_next,
+		ref_cta_label, ref_cta_h2, ref_cta_desc,
+		cta_send_request
+	} from '$lib/messages';
+	import { PHONE } from '$lib/constants';
 
-	type Image = { src: string; alt: string; category: string };
+	type CategoryId = 'all' | 'sliding' | 'custom' | 'flyscreen' | 'sanktaugustin';
+	type Image = { src: string; alt: string; categoryId: CategoryId };
+
+	const categoryLabel = (id: CategoryId): string => ({
+		all: ref_cat_all(),
+		sliding: ref_cat_sliding(),
+		custom: ref_cat_custom(),
+		flyscreen: ref_cat_flyscreen(),
+		sanktaugustin: ref_cat_sanktaugustin()
+	})[id];
+
+	const CATEGORY_IDS: CategoryId[] = ['all', 'sliding', 'custom', 'flyscreen', 'sanktaugustin'];
 
 	const allImages: Image[] = [
 		{
 			src: `/references/verschiebbareFliegengitter-1-scaled.jpeg`,
-			alt: 'Verschiebbares Fliegengitter – Projekt 1',
-			category: 'Verschiebare Fliegengitter'
+			alt: `${ref_cat_sliding()} – ${ref_img_project({ n: 1 })}`,
+			categoryId: 'sliding'
 		},
 		{
 			src: `/references/verschiebbareFliegengitter-2-scaled.jpeg`,
-			alt: 'Verschiebbares Fliegengitter – Projekt 2',
-			category: 'Verschiebare Fliegengitter'
+			alt: `${ref_cat_sliding()} – ${ref_img_project({ n: 2 })}`,
+			categoryId: 'sliding'
 		},
 		{
 			src: `/references/FliegengitterMass-1-scaled.jpeg`,
-			alt: 'Fliegengitter nach Maß – Projekt 1',
-			category: 'Fliegengitter nach Maß'
+			alt: `${ref_cat_custom()} – ${ref_img_project({ n: 1 })}`,
+			categoryId: 'custom'
 		},
 		{
 			src: `/references/FliegengitterMass-2-scaled.jpeg`,
-			alt: 'Fliegengitter nach Maß – Projekt 2',
-			category: 'Fliegengitter nach Maß'
+			alt: `${ref_cat_custom()} – ${ref_img_project({ n: 2 })}`,
+			categoryId: 'custom'
 		},
 		{
 			src: `/references/Fliegengitter-1-scaled.jpeg`,
-			alt: 'Fliegengitter – Projekt 1',
-			category: 'Fliegengitter'
+			alt: `${ref_cat_flyscreen()} – ${ref_img_project({ n: 1 })}`,
+			categoryId: 'flyscreen'
 		},
 		{
 			src: `/references/Fliegengitter-2-scaled.jpeg`,
-			alt: 'Fliegengitter – Projekt 2',
-			category: 'Fliegengitter'
+			alt: `${ref_cat_flyscreen()} – ${ref_img_project({ n: 2 })}`,
+			categoryId: 'flyscreen'
 		},
 		{
 			src: `/references/FliegengitterSanktaugustin-1-scaled.jpeg`,
-			alt: 'Fliegengitter Sankt Augustin – Projekt 1',
-			category: 'Sankt Augustin'
+			alt: `${ref_cat_sanktaugustin()} – ${ref_img_project({ n: 1 })}`,
+			categoryId: 'sanktaugustin'
 		},
 		{
 			src: `/references/FliegengitterSanktaugustin-2-scaled.jpeg`,
-			alt: 'Fliegengitter Sankt Augustin – Projekt 2',
-			category: 'Sankt Augustin'
+			alt: `${ref_cat_sanktaugustin()} – ${ref_img_project({ n: 2 })}`,
+			categoryId: 'sanktaugustin'
 		},
 		{
 			src: `/references/FliegengitterSanktaugustin-3-scaled.jpeg`,
-			alt: 'Fliegengitter Sankt Augustin – Projekt 3',
-			category: 'Sankt Augustin'
+			alt: `${ref_cat_sanktaugustin()} – ${ref_img_project({ n: 3 })}`,
+			categoryId: 'sanktaugustin'
 		},
 		{
 			src: `/references/FliegengitterSanktaugustin-4-scaled.jpeg`,
-			alt: 'Fliegengitter Sankt Augustin – Projekt 4',
-			category: 'Sankt Augustin'
+			alt: `${ref_cat_sanktaugustin()} – ${ref_img_project({ n: 4 })}`,
+			categoryId: 'sanktaugustin'
 		},
 		{
 			src: `/references/FliegengitterSanktaugustin-5-scaled.jpeg`,
-			alt: 'Fliegengitter Sankt Augustin – Projekt 5',
-			category: 'Sankt Augustin'
+			alt: `${ref_cat_sanktaugustin()} – ${ref_img_project({ n: 5 })}`,
+			categoryId: 'sanktaugustin'
 		},
 		{
 			src: `/references/FliegengitterSanktaugustin-6-scaled.jpeg`,
-			alt: 'Fliegengitter Sankt Augustin – Projekt 6',
-			category: 'Sankt Augustin'
+			alt: `${ref_cat_sanktaugustin()} – ${ref_img_project({ n: 6 })}`,
+			categoryId: 'sanktaugustin'
 		},
 		{
 			src: `/references/FliegengitterSanktaugustin-7-scaled.jpeg`,
-			alt: 'Fliegengitter Sankt Augustin – Projekt 7',
-			category: 'Sankt Augustin'
+			alt: `${ref_cat_sanktaugustin()} – ${ref_img_project({ n: 7 })}`,
+			categoryId: 'sanktaugustin'
 		},
 		{
 			src: `/references/FliegengitterSanktaugustin-8-scaled.jpeg`,
-			alt: 'Fliegengitter Sankt Augustin – Projekt 8',
-			category: 'Sankt Augustin'
+			alt: `${ref_cat_sanktaugustin()} – ${ref_img_project({ n: 8 })}`,
+			categoryId: 'sanktaugustin'
 		},
 		{
 			src: `/references/FliegengitterSanktaugustin-9-scaled.jpeg`,
-			alt: 'Fliegengitter Sankt Augustin – Projekt 9',
-			category: 'Sankt Augustin'
+			alt: `${ref_cat_sanktaugustin()} – ${ref_img_project({ n: 9 })}`,
+			categoryId: 'sanktaugustin'
 		},
 		{
 			src: `/references/FliegengitterSanktaugustin-10-scaled.jpeg`,
-			alt: 'Fliegengitter Sankt Augustin – Projekt 10',
-			category: 'Sankt Augustin'
+			alt: `${ref_cat_sanktaugustin()} – ${ref_img_project({ n: 10 })}`,
+			categoryId: 'sanktaugustin'
 		}
 	];
 
-	const categories = [
-		'Alle',
-		'Verschiebare Fliegengitter',
-		'Fliegengitter nach Maß',
-		'Fliegengitter',
-		'Sankt Augustin'
-	];
-
-	let activeCategory = $state('Alle');
+	let activeCategory = $state<CategoryId>('all');
 	let lightboxIndex = $state<number | null>(null);
 
 	const filtered = $derived(
-		activeCategory === 'Alle'
+		activeCategory === 'all'
 			? allImages
-			: allImages.filter((img) => img.category === activeCategory)
+			: allImages.filter((img) => img.categoryId === activeCategory)
 	);
 
 	function openLightbox(index: number) {
@@ -132,16 +146,10 @@
 </script>
 
 <svelte:head>
-	<title>Referenzen – Insektenschutz Rhein-Sieg</title>
-	<meta
-		name="description"
-		content="Referenzbilder von Insektenschutz Rhein-Sieg in Sankt Augustin – Fliegengitter, Maßanfertigung und verschiebbare Systeme in der Praxis."
-	/>
-	<meta property="og:title" content="Referenzen – Insektenschutz Rhein-Sieg" />
-	<meta
-		property="og:description"
-		content="Referenzbilder von Insektenschutz Rhein-Sieg in Sankt Augustin – Fliegengitter, Maßanfertigung und verschiebbare Systeme in der Praxis."
-	/>
+	<title>{ref_head_title()}</title>
+	<meta name="description" content={ref_head_desc()} />
+	<meta property="og:title" content={ref_head_title()} />
+	<meta property="og:description" content={ref_head_desc()} />
 </svelte:head>
 
 <svelte:window onkeydown={handleKeydown} />
@@ -149,14 +157,13 @@
 <!-- Hero -->
 <section class="dark bg-background text-foreground">
 	<div class="mx-auto max-w-315 px-6 py-20 md:py-28">
-		<p class="mb-4 text-sm font-semibold tracking-widest text-primary uppercase">Referenzen</p>
+		<p class="mb-4 text-sm font-semibold tracking-widest text-primary uppercase">{ref_hero_label()}</p>
 		<h1 class="mb-4 max-w-2xl text-4xl font-bold tracking-tight md:text-5xl">
-			Unsere Arbeiten<br />
-			<span class="text-primary">in der Praxis</span>
+			{ref_hero_h1_pre()}<br />
+			<span class="text-primary">{ref_hero_h1_post()}</span>
 		</h1>
 		<p class="max-w-xl text-lg leading-relaxed text-secondary-foreground">
-			Einblicke in abgeschlossene Projekte – von Standardfenstern bis hin zu großen Terrassenfronten
-			und maßgefertigten Sonderlösungen in Sankt Augustin und der Rhein-Sieg-Region.
+			{ref_hero_desc()}
 		</p>
 	</div>
 </section>
@@ -166,17 +173,17 @@
 	<div class="mx-auto max-w-315 px-6 py-16 md:py-24">
 		<!-- Filter tabs -->
 		<div class="mb-10 flex flex-wrap gap-2">
-			{#each categories as cat (cat)}
+			{#each CATEGORY_IDS as cat (cat)}
 				<button
 					onclick={() => (activeCategory = cat)}
 					class="border px-4 py-2 text-sm font-medium transition-colors {activeCategory === cat
 						? 'border-primary bg-primary text-primary-foreground'
 						: 'border-border text-muted-foreground hover:border-foreground hover:text-foreground'}"
 				>
-					{cat}
-					{#if cat !== 'Alle'}
+					{categoryLabel(cat)}
+					{#if cat !== 'all'}
 						<span class="ml-1.5 text-xs opacity-60">
-							({allImages.filter((img) => img.category === cat).length})
+							({allImages.filter((img) => img.categoryId === cat).length})
 						</span>
 					{:else}
 						<span class="ml-1.5 text-xs opacity-60">({allImages.length})</span>
@@ -191,7 +198,7 @@
 				<button
 					onclick={() => openLightbox(i)}
 					class="group relative aspect-square overflow-hidden bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-					aria-label="Bild vergrößern: {img.alt}"
+					aria-label={ref_img_expand({ alt: img.alt })}
 				>
 					<img
 						src={img.src}
@@ -205,15 +212,14 @@
 					<div
 						class="absolute right-0 bottom-0 left-0 translate-y-full bg-foreground/70 px-3 py-2 text-xs font-medium text-white transition-transform duration-300 group-hover:translate-y-0"
 					>
-						{img.category}
+						{categoryLabel(img.categoryId)}
 					</div>
 				</button>
 			{/each}
 		</div>
 
 		<p class="mt-6 text-sm text-muted-foreground">
-			{filtered.length}
-			{filtered.length === 1 ? 'Bild' : 'Bilder'} angezeigt
+			{filtered.length === 1 ? ref_count_one() : ref_count({ n: filtered.length })}
 		</p>
 	</div>
 </section>
@@ -226,14 +232,14 @@
 		onclick={closeLightbox}
 		role="dialog"
 		aria-modal="true"
-		aria-label="Bildvorschau"
+		aria-label={ref_lightbox_aria()}
 		tabindex="-1"
 	>
 		<!-- Close -->
 		<button
 			onclick={closeLightbox}
 			class="absolute top-4 right-4 flex size-10 items-center justify-center text-white/70 transition-colors hover:text-white"
-			aria-label="Schließen"
+			aria-label={ref_lightbox_close()}
 		>
 			<X class="size-6" />
 		</button>
@@ -246,7 +252,7 @@
 					prev();
 				}}
 				class="absolute left-4 flex size-10 items-center justify-center text-white/70 transition-colors hover:text-white"
-				aria-label="Vorheriges Bild"
+				aria-label={ref_lightbox_prev()}
 			>
 				<ChevronLeft class="size-7" />
 			</button>
@@ -276,7 +282,7 @@
 					next();
 				}}
 				class="absolute right-4 flex size-10 items-center justify-center text-white/70 transition-colors hover:text-white"
-				aria-label="Nächstes Bild"
+				aria-label={ref_lightbox_next()}
 			>
 				<ChevronRight class="size-7" />
 			</button>
@@ -289,26 +295,25 @@
 	<div class="mx-auto max-w-315 px-6 py-20 md:py-28">
 		<div class="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
 			<div>
-				<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">Ihr Projekt</p>
-				<h2 class="text-3xl font-bold tracking-tight md:text-4xl">Ihr Zuhause als nächstes?</h2>
+				<p class="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">{ref_cta_label()}</p>
+				<h2 class="text-3xl font-bold tracking-tight md:text-4xl">{ref_cta_h2()}</h2>
 				<p class="mt-3 max-w-md text-sm leading-relaxed text-secondary-foreground">
-					Wir beraten Sie kostenlos vor Ort, nehmen Maß und fertigen Ihre individuelle Lösung. Rufen
-					Sie uns an oder stellen Sie direkt eine Anfrage.
+					{ref_cta_desc()}
 				</p>
 			</div>
 			<div class="flex shrink-0 flex-col gap-3 sm:flex-row">
 				<a
-					href="tel:+4915565097031"
+					href={PHONE.href}
 					class="inline-flex items-center justify-center gap-2 bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
 				>
 					<Phone class="size-4 shrink-0" />
-					015565 097031
+					{PHONE.display}
 				</a>
 				<a
 					href={resolve('/kontakt')}
 					class="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent"
 				>
-					Anfrage stellen
+					{cta_send_request()}
 					<ArrowRight class="size-4 shrink-0" />
 				</a>
 			</div>
