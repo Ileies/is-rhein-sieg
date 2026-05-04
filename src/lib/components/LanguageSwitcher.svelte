@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Globe, Check } from '@lucide/svelte';
 	import { cn } from '$lib/utils';
+	import { nav_lang_select } from '$lib/messages';
 
 	let { locale, variant = 'dropdown' }: { locale: string; variant?: 'dropdown' | 'inline' } =
 		$props();
@@ -54,7 +55,7 @@
 			onclick={() => (open = !open)}
 			aria-expanded={open}
 			aria-haspopup="listbox"
-			aria-label="Sprache wählen"
+			aria-label={nav_lang_select()}
 			class="inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
 		>
 			<Globe size={18} />
@@ -63,7 +64,7 @@
 		{#if open}
 			<div
 				role="listbox"
-				aria-label="Sprache wählen"
+				aria-label={nav_lang_select()}
 				class="absolute top-full right-0 z-50 mt-1.5 min-w-37 overflow-hidden rounded-lg border border-border bg-background shadow-lg"
 			>
 				{#each locales as l (l.code)}

@@ -3,14 +3,22 @@
 	import { slide } from 'svelte/transition';
 	import { resolve } from '$app/paths';
 	import { Menu, Phone, X } from '@lucide/svelte';
+	import LanguageSwitcher from './LanguageSwitcher.svelte';
+	import {
+		nav_home, nav_services, nav_references, nav_about, nav_contact,
+		nav_menu_open, nav_menu_close, nav_aria_main, nav_aria_mobile
+	} from '$lib/messages';
+	import { PHONE } from '$lib/constants';
+
+	let { locale }: { locale: string } = $props();
 
 	const navLinks = [
-		{ label: 'Startseite', href: `/` },
-		{ label: 'Leistungen', href: `/leistungen` },
-		{ label: 'Referenzen', href: `/referenzen` },
-		{ label: 'Über uns', href: `/ueber-uns` },
-		{ label: 'Kontakt', href: `/kontakt` }
-	] as const;
+		{ label: nav_home(), href: `/` },
+		{ label: nav_services(), href: `/leistungen` },
+		{ label: nav_references(), href: `/referenzen` },
+		{ label: nav_about(), href: `/ueber-uns` },
+		{ label: nav_contact(), href: `/kontakt` }
+	];
 
 	let mobileOpen = $state(false);
 
@@ -30,7 +38,7 @@
 			</a>
 
 			<!-- Desktop nav -->
-			<nav aria-label="Hauptnavigation" class="hidden items-center gap-8 lg:flex">
+			<nav aria-label={nav_aria_main()} class="hidden items-center gap-8 lg:flex">
 				{#each navLinks as { label, href } (href)}
 					<a
 						href={resolve(href)}
@@ -41,19 +49,22 @@
 				{/each}
 			</nav>
 
-			<!-- Desktop CTA -->
-			<a
-				class="hidden items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-primary/80 lg:flex"
-				href="tel:+4915565097031"
-			>
-				<Phone class="size-4 shrink-0" />
-				015565 097031
-			</a>
+			<!-- Desktop right: language switcher + phone CTA -->
+			<div class="hidden items-center gap-3 lg:flex">
+				<LanguageSwitcher {locale} />
+				<a
+					class="flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-primary/80"
+					href={PHONE.href}
+				>
+					<Phone class="size-4 shrink-0" />
+					{PHONE.display}
+				</a>
+			</div>
 
 			<!-- Mobile toggle -->
 			<button
 				aria-expanded={mobileOpen}
-				aria-label={mobileOpen ? 'Menü schließen' : 'Menü öffnen'}
+				aria-label={mobileOpen ? nav_menu_close() : nav_menu_open()}
 				class="text-foreground lg:hidden"
 				onclick={() => (mobileOpen = !mobileOpen)}
 			>
@@ -69,7 +80,7 @@
 	<!-- Mobile menu -->
 	{#if mobileOpen}
 		<div transition:slide={{ duration: 200 }} class="border-t border-border bg-card lg:hidden">
-			<nav class="mx-auto flex max-w-315 flex-col px-6 py-4" aria-label="Mobile Navigation">
+			<nav class="mx-auto flex max-w-315 flex-col px-6 py-4" aria-label={nav_aria_mobile()}>
 				{#each navLinks as { label, href } (href)}
 					<a
 						href={resolve(href)}
@@ -80,13 +91,16 @@
 					>
 				{/each}
 				<a
-					href="tel:+4915565097031"
+					href={PHONE.href}
 					onclick={() => (mobileOpen = false)}
 					class="mt-2 flex items-center gap-2 border-t border-border pt-3 text-sm font-medium text-primary"
 				>
 					<Phone class="size-4 shrink-0" />
-					015565 097031
+					{PHONE.display}
 				</a>
+				<div class="mt-3 border-t border-border pt-3">
+					<LanguageSwitcher {locale} variant="inline" />
+				</div>
 			</nav>
 		</div>
 	{/if}

@@ -2,14 +2,21 @@
 	import { Separator } from '$lib/components/ui/separator';
 	import { Mail, MapPin, Phone } from '@lucide/svelte';
 	import { resolve } from '$app/paths';
+	import {
+		nav_home, nav_services, nav_references, nav_about, nav_contact,
+		nav_aria_footer,
+		footer_tagline, footer_nav_heading, footer_contact_heading,
+		footer_copyright, footer_impressum, footer_datenschutz
+	} from '$lib/messages';
+	import { ADDRESS, PHONE, EMAIL } from '$lib/constants';
 
 	const navLinks = [
-		{ label: 'Startseite', href: `/` },
-		{ label: 'Leistungen', href: `/leistungen` },
-		{ label: 'Referenzen', href: `/referenzen` },
-		{ label: 'Über uns', href: `/ueber-uns` },
-		{ label: 'Kontakt', href: `/kontakt` }
-	] as const;
+		{ label: nav_home(), href: `/` },
+		{ label: nav_services(), href: `/leistungen` },
+		{ label: nav_references(), href: `/referenzen` },
+		{ label: nav_about(), href: `/ueber-uns` },
+		{ label: nav_contact(), href: `/kontakt` }
+	];
 
 	const year = new Date().getFullYear();
 </script>
@@ -23,18 +30,18 @@
 					<img src="/logo-footer.svg" alt="Insektenschutz Rhein-Sieg" class="h-14 w-auto" />
 				</a>
 				<p class="max-w-xs text-sm leading-relaxed text-muted-foreground">
-					Ihr regionaler Experte für maßgefertigte Fliegengitter – von der Beratung bis zur Montage.
+					{footer_tagline()}
 				</p>
 				<address class="flex items-start gap-2 text-sm text-secondary-foreground not-italic">
 					<MapPin class="mt-0.5 size-4 shrink-0 text-primary" />
-					Ringstr. 7, 53757 Sankt Augustin
+					{ADDRESS.full}
 				</address>
 			</div>
 
 			<!-- Navigation -->
 			<div class="space-y-5">
-				<h3 class="text-xs font-semibold tracking-widest text-primary uppercase">Navigation</h3>
-				<nav aria-label="Footer-Navigation">
+				<h3 class="text-xs font-semibold tracking-widest text-primary uppercase">{footer_nav_heading()}</h3>
+				<nav aria-label={nav_aria_footer()}>
 					<ul class="space-y-2.5">
 						{#each navLinks as { label, href } (href)}
 							<li>
@@ -51,24 +58,24 @@
 
 			<!-- Contact -->
 			<div class="space-y-5">
-				<h3 class="text-xs font-semibold tracking-widest text-primary uppercase">Kontakt</h3>
+				<h3 class="text-xs font-semibold tracking-widest text-primary uppercase">{footer_contact_heading()}</h3>
 				<ul class="space-y-3 text-sm text-secondary-foreground">
 					<li>
 						<a
-							href="tel:+4915565097031"
+							href={PHONE.href}
 							class="flex items-center gap-2.5 transition-colors hover:text-foreground"
 						>
 							<Phone class="size-4 shrink-0 text-primary" />
-							015565 097031
+							{PHONE.display}
 						</a>
 					</li>
 					<li>
 						<a
-							href="mailto:info@insektenschutz-rhein-sieg.de"
+							href="mailto:{EMAIL}"
 							class="flex items-center gap-2.5 transition-colors hover:text-foreground"
 						>
 							<Mail class="size-4 shrink-0 text-primary" />
-							info@insektenschutz-rhein-sieg.de
+							{EMAIL}
 						</a>
 					</li>
 				</ul>
@@ -139,13 +146,10 @@
 		<div
 			class="flex flex-col gap-3 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between"
 		>
-			<span>© {year} Insektenschutz Rhein-Sieg. Alle Rechte vorbehalten.</span>
+			<span>{footer_copyright({ year })}</span>
 			<nav class="flex gap-5">
-				<a href={resolve('/impressum')} class="transition-colors hover:text-foreground">Impressum</a
-				>
-				<a href={resolve('/datenschutz')} class="transition-colors hover:text-foreground"
-					>Datenschutz</a
-				>
+				<a href={resolve('/impressum')} class="transition-colors hover:text-foreground">{footer_impressum()}</a>
+				<a href={resolve('/datenschutz')} class="transition-colors hover:text-foreground">{footer_datenschutz()}</a>
 			</nav>
 		</div>
 	</div>

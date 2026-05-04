@@ -2,40 +2,35 @@
 	import { page } from '$app/state';
 	import { ArrowLeft, ArrowRight, Phone } from '@lucide/svelte';
 	import { resolve } from '$app/paths';
-
-	const messages: Record<number, { title: string; description: string }> = {
-		404: {
-			title: 'Seite nicht gefunden',
-			description:
-				'Die gesuchte Seite existiert nicht oder wurde verschoben. Vielleicht hilft Ihnen ein Blick auf unsere Startseite weiter.'
-		},
-		403: {
-			title: 'Zugriff verweigert',
-			description: 'Sie haben keine Berechtigung, diese Seite aufzurufen.'
-		},
-		500: {
-			title: 'Serverfehler',
-			description:
-				'Es ist ein interner Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie uns direkt.'
-		}
-	};
+	import {
+		err_404_title, err_404_desc,
+		err_403_title, err_403_desc,
+		err_500_title, err_500_desc,
+		err_fallback_title, err_fallback_desc,
+		err_status_label, err_home_cta, err_maybe_searching,
+		nav_home, nav_services, nav_references, nav_contact
+	} from '$lib/messages';
+	import { PHONE } from '$lib/constants';
 
 	const status = page.status;
-	const fallback = {
-		title: 'Etwas ist schiefgelaufen',
-		description:
-			'Es ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie uns direkt.'
-	};
 
-	const { title, description } = messages[status] ?? fallback;
+	const title = status === 404 ? err_404_title()
+		: status === 403 ? err_403_title()
+		: status === 500 ? err_500_title()
+		: err_fallback_title();
 
-	const pageTitle = $derived(`${status} – ${title} | Insektenschutz Rhein-Sieg`);
+	const description = status === 404 ? err_404_desc()
+		: status === 403 ? err_403_desc()
+		: status === 500 ? err_500_desc()
+		: err_fallback_desc();
+
+	const pageTitle = $derived(`${err_status_label({ status })} – ${title} | Insektenschutz Rhein-Sieg`);
 
 	const quickLinks = [
-		{ label: 'Startseite', href: `/` },
-		{ label: 'Leistungen', href: `/leistungen` },
-		{ label: 'Referenzen', href: `/referenzen` },
-		{ label: 'Kontakt', href: `/kontakt` }
+		{ label: nav_home(),       href: `/` },
+		{ label: nav_services(),   href: `/leistungen` },
+		{ label: nav_references(), href: `/referenzen` },
+		{ label: nav_contact(),    href: `/kontakt` }
 	] as const;
 </script>
 
@@ -50,7 +45,7 @@
 			<span
 				class="mb-6 inline-block bg-primary/10 px-3 py-1 text-xs font-semibold tracking-widest text-primary uppercase"
 			>
-				Fehler {status}
+				{err_status_label({ status })}
 			</span>
 			<h1 class="mb-4 text-4xl font-bold tracking-tight md:text-5xl">
 				{title}
@@ -66,21 +61,21 @@
 					class="inline-flex items-center gap-2 bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
 				>
 					<ArrowLeft class="size-4 shrink-0" />
-					Zur Startseite
+					{err_home_cta()}
 				</a>
 				<a
-					href="tel:+4915565097031"
+					href={PHONE.href}
 					class="inline-flex items-center gap-2 border border-border px-6 py-3 text-sm font-semibold transition-colors hover:bg-secondary"
 				>
 					<Phone class="size-4 shrink-0" />
-					015565 097031
+					{PHONE.display}
 				</a>
 			</div>
 
 			<!-- Quick nav -->
 			<div class="border-t border-border pt-8">
 				<p class="mb-4 text-xs font-semibold tracking-widest text-muted-foreground uppercase">
-					Vielleicht suchen Sie:
+					{err_maybe_searching()}
 				</p>
 				<ul class="flex flex-wrap gap-x-6 gap-y-2">
 					{#each quickLinks as { label, href } (href)}
