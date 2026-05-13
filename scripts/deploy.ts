@@ -4,9 +4,14 @@ const SSH_HOST = 'hosting212287@202.61.233.108';
 const REMOTE_DIR = '~/insektenschutz-rhein-sieg.de';
 
 try {
-	// Create restart.txt to trigger app restart on Plesk
-	console.log('Creating restart.txt...');
-	await $`touch ./build/restart.txt`;
+	// app.js: CJS wrapper so Passenger finds the default startup file without needing package.json
+	await Bun.write('./build/app.js', `import('./index.js');\n`);
+	// package.json still needed for "type: module" when Passenger does read it
+	await Bun.write('./build/package.json', JSON.stringify({ main: 'app.js', type: 'module' }, null, '\t') + '\n');
+
+	// Create tmp/restart.txt to trigger Passenger app restart
+	console.log('Creating tmp/restart.txt...');
+	await $`mkdir -p ./build/tmp && touch ./build/tmp/restart.txt`;
 
 	// Compress build directory
 	console.log('Compressing build directory...');
