@@ -4,6 +4,7 @@ node_modules
 !.gitignore
 !.prettierignore
 !.prettierrc
+!.github
 
 # Output
 /build
