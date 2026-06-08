@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Check, X, Pencil, Trash2, Upload, Plus } from '@lucide/svelte';
+	import { Check, X, Pencil, Trash2, Upload, Plus, Download } from '@lucide/svelte';
 	import type { ActionData, PageData } from './$types';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
@@ -256,23 +256,34 @@
 								<p class="truncate text-xs text-gray-600" title={img.filename}>{img.filename}</p>
 								<p class="text-xs text-gray-400">{categoryName(img.categoryId)}</p>
 							</div>
-							<form
-								method="POST"
-								action="?/deleteImage"
-								class="absolute top-1 right-1 opacity-0 transition-opacity group-hover:opacity-100"
-								onsubmit={(e) => {
-									if (!confirm(`"${img.filename}" löschen?`)) e.preventDefault();
-								}}
+							<div
+								class="absolute top-1 right-1 flex gap-1 opacity-0 transition-opacity group-hover:opacity-100"
 							>
-								<input type="hidden" name="filename" value={img.filename} />
-								<button
-									type="submit"
-									class="flex size-6 items-center justify-center rounded bg-red-600 text-white"
-									title="Löschen"
+								<a
+									href="/api/references/image/{img.filename}"
+									download={img.filename}
+									class="flex size-6 items-center justify-center rounded bg-gray-700 text-white"
+									title="Herunterladen"
 								>
-									<X class="size-3.5" />
-								</button>
-							</form>
+									<Download class="size-3.5" />
+								</a>
+								<form
+									method="POST"
+									action="?/deleteImage"
+									onsubmit={(e) => {
+										if (!confirm(`"${img.filename}" löschen?`)) e.preventDefault();
+									}}
+								>
+									<input type="hidden" name="filename" value={img.filename} />
+									<button
+										type="submit"
+										class="flex size-6 items-center justify-center rounded bg-red-600 text-white"
+										title="Löschen"
+									>
+										<X class="size-3.5" />
+									</button>
+								</form>
+							</div>
 						</div>
 					{/each}
 				</div>
