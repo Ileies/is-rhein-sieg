@@ -21,3 +21,4 @@ vite.config.ts.timestamp-*
 
 # Local data
 messages/
+/data/references/
