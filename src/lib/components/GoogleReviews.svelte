@@ -102,7 +102,7 @@
 					</div>
 
 					<!-- Review text -->
-					<p class="flex-1 whitespace-pre-line text-sm leading-relaxed text-muted-foreground">
+					<p class="line-clamp-5 whitespace-pre-line text-sm leading-relaxed text-muted-foreground">
 						{review.text}
 					</p>
 				</div>
