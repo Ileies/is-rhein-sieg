@@ -64,6 +64,8 @@ export function footer_datenschutz(p?: Record<string, string | number>): string 
 export function whatsapp_aria(p?: Record<string, string | number>): string { return _t(["WhatsApp Kontakt","WhatsApp contact","WhatsApp iletişim"], p); }
 export function label_instagram(p?: Record<string, string | number>): string { return _t(["Instagram","Instagram","Instagram"], p); }
 export function instagram_aria(p?: Record<string, string | number>): string { return _t(["Besuchen Sie uns auf Instagram","Visit us on Instagram","Instagram'da bizi ziyaret edin"], p); }
+export function reviews_label(p?: Record<string, string | number>): string { return _t(["Kundenstimmen","Customer reviews","Müşteri yorumları"], p); }
+export function reviews_h2(p?: Record<string, string | number>): string { return _t(["Was unsere Kunden sagen","What our customers say","Müşterilerimiz ne diyor"], p); }
 export function err_404_title(p?: Record<string, string | number>): string { return _t(["Seite nicht gefunden","Page not found","Sayfa bulunamadı"], p); }
 export function err_404_desc(p?: Record<string, string | number>): string { return _t(["Die gesuchte Seite existiert nicht oder wurde verschoben. Vielleicht hilft Ihnen ein Blick auf unsere Startseite weiter.","The page you are looking for does not exist or has been moved. Perhaps a look at our homepage will help.","Aradığınız sayfa mevcut değil veya taşınmış. Belki ana sayfamıza bir göz atmak yardımcı olur."], p); }
 export function err_403_title(p?: Record<string, string | number>): string { return _t(["Zugriff verweigert","Access denied","Erişim reddedildi"], p); }

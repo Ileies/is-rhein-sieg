@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { ArrowRight, Check, MapPin, Phone, Ruler, Shield, Wrench } from '@lucide/svelte';
 	import { resolve } from '$app/paths';
+	import GoogleReviews from '$lib/components/GoogleReviews.svelte';
 	import {
 		home_hero_h1_pre, home_hero_h1_mid, home_hero_h1_post,
 		home_hero_desc, home_hero_cta_services,
@@ -357,6 +358,8 @@
 		</div>
 	</div>
 </section>
+
+<GoogleReviews variant="background" />
 
 <!-- CTA -->
 <section class="dark bg-background text-foreground">

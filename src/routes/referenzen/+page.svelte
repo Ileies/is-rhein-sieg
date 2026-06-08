@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import { Phone, X, ChevronLeft, ChevronRight } from '@lucide/svelte';
+	import GoogleReviews from '$lib/components/GoogleReviews.svelte';
 	import { resolve } from '$app/paths';
 	import {
 		ref_head_title, ref_head_desc,
@@ -216,6 +217,8 @@
 		{/if}
 	</div>
 {/if}
+
+<GoogleReviews variant="secondary" />
 
 <!-- CTA -->
 <section class="dark bg-background text-foreground">
