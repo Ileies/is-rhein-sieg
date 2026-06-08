@@ -12,9 +12,10 @@
 		ko_field_email, ko_field_email_placeholder,
 		ko_field_message, ko_field_message_placeholder,
 		ko_submit, ko_submitting, ko_privacy_note,
-		label_phone, label_email_contact, label_address
+		label_phone, label_email_contact, label_address,
+		ko_instagram_label, ko_instagram_handle
 	} from '$lib/messages';
-	import { ADDRESS, PHONE, EMAIL } from '$lib/constants';
+	import { ADDRESS, PHONE, EMAIL, INSTAGRAM_URL } from '$lib/constants';
 
 	let { form }: PageProps = $props();
 
@@ -115,6 +116,42 @@
 							</p>
 							<p class="font-medium text-foreground">{ADDRESS.full}</p>
 						</div>
+					</li>
+					<li>
+						<a
+							class="group flex items-start gap-4 transition-opacity hover:opacity-80"
+							href={INSTAGRAM_URL}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<span
+								class="mt-0.5 flex size-10 shrink-0 items-center justify-center bg-primary/10 text-primary"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									class="size-5"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									aria-hidden="true"
+								>
+									<rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+									<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+									<line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+								</svg>
+							</span>
+							<div>
+								<p
+									class="mb-0.5 text-xs font-semibold tracking-widest text-muted-foreground uppercase"
+								>
+									{ko_instagram_label()}
+								</p>
+								<p class="font-medium text-foreground">{ko_instagram_handle()}</p>
+							</div>
+						</a>
 					</li>
 				</ul>
 			</div>

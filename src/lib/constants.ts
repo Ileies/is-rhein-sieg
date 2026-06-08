@@ -28,6 +28,8 @@ export const EMAIL = 'info@insektenschutz-rhein-sieg.de';
 
 export const WHATSAPP_HREF = `https://wa.me/${PHONE.e164.replace('+', '')}`;
 
+export const INSTAGRAM_URL = 'https://www.instagram.com/insekten.schutz/';
+
 export const GEO = {
 	lat: 50.7563,
 	lon: 7.1844,
