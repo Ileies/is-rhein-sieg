@@ -1,0 +1,26 @@
+{
+  "categories": [
+    { "id": "sliding", "de": "Verschiebare Fliegengitter", "en": "Sliding fly screens", "tr": "Sürgülü sineklikler" },
+    { "id": "custom", "de": "Fliegengitter nach Maß", "en": "Custom fly screens", "tr": "Özel ölçü sineklik" },
+    { "id": "flyscreen", "de": "Fliegengitter", "en": "Fly screens", "tr": "Sineklikler" },
+    { "id": "sanktaugustin", "de": "Sankt Augustin", "en": "Sankt Augustin", "tr": "Sankt Augustin" }
+  ],
+  "images": [
+    { "filename": "verschiebbareFliegengitter-1-scaled.jpeg", "categoryId": "sliding", "alt": "Verschiebbarer Schieberahmen 1" },
+    { "filename": "verschiebbareFliegengitter-2-scaled.jpeg", "categoryId": "sliding", "alt": "Verschiebbarer Schieberahmen 2" },
+    { "filename": "FliegengitterMass-1-scaled.jpeg", "categoryId": "custom", "alt": "Fliegengitter nach Maß 1" },
+    { "filename": "FliegengitterMass-2-scaled.jpeg", "categoryId": "custom", "alt": "Fliegengitter nach Maß 2" },
+    { "filename": "Fliegengitter-1-scaled.jpeg", "categoryId": "flyscreen", "alt": "Fliegengitter 1" },
+    { "filename": "Fliegengitter-2-scaled.jpeg", "categoryId": "flyscreen", "alt": "Fliegengitter 2" },
+    { "filename": "FliegengitterSanktaugustin-1-scaled.jpeg", "categoryId": "sanktaugustin", "alt": "Projekt Sankt Augustin 1" },
+    { "filename": "FliegengitterSanktaugustin-2-scaled.jpeg", "categoryId": "sanktaugustin", "alt": "Projekt Sankt Augustin 2" },
+    { "filename": "FliegengitterSanktaugustin-3-scaled.jpeg", "categoryId": "sanktaugustin", "alt": "Projekt Sankt Augustin 3" },
+    { "filename": "FliegengitterSanktaugustin-4-scaled.jpeg", "categoryId": "sanktaugustin", "alt": "Projekt Sankt Augustin 4" },
+    { "filename": "FliegengitterSanktaugustin-5-scaled.jpeg", "categoryId": "sanktaugustin", "alt": "Projekt Sankt Augustin 5" },
+    { "filename": "FliegengitterSanktaugustin-6-scaled.jpeg", "categoryId": "sanktaugustin", "alt": "Projekt Sankt Augustin 6" },
+    { "filename": "FliegengitterSanktaugustin-7-scaled.jpeg", "categoryId": "sanktaugustin", "alt": "Projekt Sankt Augustin 7" },
+    { "filename": "FliegengitterSanktaugustin-8-scaled.jpeg", "categoryId": "sanktaugustin", "alt": "Projekt Sankt Augustin 8" },
+    { "filename": "FliegengitterSanktaugustin-9-scaled.jpeg", "categoryId": "sanktaugustin", "alt": "Projekt Sankt Augustin 9" },
+    { "filename": "FliegengitterSanktaugustin-10-scaled.jpeg", "categoryId": "sanktaugustin", "alt": "Projekt Sankt Augustin 10" }
+  ]
+}

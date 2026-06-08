@@ -5,112 +5,34 @@
 	import {
 		ref_head_title, ref_head_desc,
 		ref_hero_label, ref_hero_h1_pre, ref_hero_h1_post, ref_hero_desc,
-		ref_cat_all, ref_cat_sliding, ref_cat_custom, ref_cat_flyscreen, ref_cat_sanktaugustin,
-		ref_img_expand, ref_img_project,
+		ref_cat_all,
+		ref_img_expand,
 		ref_count, ref_count_one,
 		ref_lightbox_aria, ref_lightbox_close, ref_lightbox_prev, ref_lightbox_next,
 		ref_cta_label, ref_cta_h2, ref_cta_desc,
 		cta_send_request
 	} from '$lib/messages';
 	import { PHONE } from '$lib/constants';
+	import type { PageData } from './$types';
 
-	type CategoryId = 'all' | 'sliding' | 'custom' | 'flyscreen' | 'sanktaugustin';
-	type Image = { src: string; alt: string; categoryId: CategoryId };
+	let { data }: { data: PageData } = $props();
 
-	const categoryLabel = (id: CategoryId): string => ({
-		all: ref_cat_all(),
-		sliding: ref_cat_sliding(),
-		custom: ref_cat_custom(),
-		flyscreen: ref_cat_flyscreen(),
-		sanktaugustin: ref_cat_sanktaugustin()
-	})[id];
+	type DisplayImage = { src: string; alt: string; categoryId: string };
 
-	const CATEGORY_IDS: CategoryId[] = ['all', 'sliding', 'custom', 'flyscreen', 'sanktaugustin'];
+	const allImages: DisplayImage[] = $derived(
+		data.images.map((img) => ({
+			src: `/api/references/image/${img.filename}`,
+			alt: img.alt,
+			categoryId: img.categoryId
+		}))
+	);
 
-	const allImages: Image[] = [
-		{
-			src: `/references/verschiebbareFliegengitter-1-scaled.jpeg`,
-			alt: `${ref_cat_sliding()} – ${ref_img_project({ n: 1 })}`,
-			categoryId: 'sliding'
-		},
-		{
-			src: `/references/verschiebbareFliegengitter-2-scaled.jpeg`,
-			alt: `${ref_cat_sliding()} – ${ref_img_project({ n: 2 })}`,
-			categoryId: 'sliding'
-		},
-		{
-			src: `/references/FliegengitterMass-1-scaled.jpeg`,
-			alt: `${ref_cat_custom()} – ${ref_img_project({ n: 1 })}`,
-			categoryId: 'custom'
-		},
-		{
-			src: `/references/FliegengitterMass-2-scaled.jpeg`,
-			alt: `${ref_cat_custom()} – ${ref_img_project({ n: 2 })}`,
-			categoryId: 'custom'
-		},
-		{
-			src: `/references/Fliegengitter-1-scaled.jpeg`,
-			alt: `${ref_cat_flyscreen()} – ${ref_img_project({ n: 1 })}`,
-			categoryId: 'flyscreen'
-		},
-		{
-			src: `/references/Fliegengitter-2-scaled.jpeg`,
-			alt: `${ref_cat_flyscreen()} – ${ref_img_project({ n: 2 })}`,
-			categoryId: 'flyscreen'
-		},
-		{
-			src: `/references/FliegengitterSanktaugustin-1-scaled.jpeg`,
-			alt: `${ref_cat_sanktaugustin()} – ${ref_img_project({ n: 1 })}`,
-			categoryId: 'sanktaugustin'
-		},
-		{
-			src: `/references/FliegengitterSanktaugustin-2-scaled.jpeg`,
-			alt: `${ref_cat_sanktaugustin()} – ${ref_img_project({ n: 2 })}`,
-			categoryId: 'sanktaugustin'
-		},
-		{
-			src: `/references/FliegengitterSanktaugustin-3-scaled.jpeg`,
-			alt: `${ref_cat_sanktaugustin()} – ${ref_img_project({ n: 3 })}`,
-			categoryId: 'sanktaugustin'
-		},
-		{
-			src: `/references/FliegengitterSanktaugustin-4-scaled.jpeg`,
-			alt: `${ref_cat_sanktaugustin()} – ${ref_img_project({ n: 4 })}`,
-			categoryId: 'sanktaugustin'
-		},
-		{
-			src: `/references/FliegengitterSanktaugustin-5-scaled.jpeg`,
-			alt: `${ref_cat_sanktaugustin()} – ${ref_img_project({ n: 5 })}`,
-			categoryId: 'sanktaugustin'
-		},
-		{
-			src: `/references/FliegengitterSanktaugustin-6-scaled.jpeg`,
-			alt: `${ref_cat_sanktaugustin()} – ${ref_img_project({ n: 6 })}`,
-			categoryId: 'sanktaugustin'
-		},
-		{
-			src: `/references/FliegengitterSanktaugustin-7-scaled.jpeg`,
-			alt: `${ref_cat_sanktaugustin()} – ${ref_img_project({ n: 7 })}`,
-			categoryId: 'sanktaugustin'
-		},
-		{
-			src: `/references/FliegengitterSanktaugustin-8-scaled.jpeg`,
-			alt: `${ref_cat_sanktaugustin()} – ${ref_img_project({ n: 8 })}`,
-			categoryId: 'sanktaugustin'
-		},
-		{
-			src: `/references/FliegengitterSanktaugustin-9-scaled.jpeg`,
-			alt: `${ref_cat_sanktaugustin()} – ${ref_img_project({ n: 9 })}`,
-			categoryId: 'sanktaugustin'
-		},
-		{
-			src: `/references/FliegengitterSanktaugustin-10-scaled.jpeg`,
-			alt: `${ref_cat_sanktaugustin()} – ${ref_img_project({ n: 10 })}`,
-			categoryId: 'sanktaugustin'
-		}
-	];
+	function categoryLabel(id: string): string {
+		if (id === 'all') return ref_cat_all();
+		return data.categories.find((c) => c.id === id)?.label ?? id;
+	}
 
-	let activeCategory = $state<CategoryId>('all');
+	let activeCategory = $state<string>('all');
 	let lightboxIndex = $state<number | null>(null);
 
 	const filtered = $derived(
@@ -173,21 +95,26 @@
 	<div class="mx-auto max-w-315 px-6 py-16 md:py-24">
 		<!-- Filter tabs -->
 		<div class="mb-10 flex flex-wrap gap-2">
-			{#each CATEGORY_IDS as cat (cat)}
+			<button
+				onclick={() => (activeCategory = 'all')}
+				class="border px-4 py-2 text-sm font-medium transition-colors {activeCategory === 'all'
+					? 'border-primary bg-primary text-primary-foreground'
+					: 'border-border text-muted-foreground hover:border-foreground hover:text-foreground'}"
+			>
+				{ref_cat_all()}
+				<span class="ml-1.5 text-xs opacity-60">({allImages.length})</span>
+			</button>
+			{#each data.categories as cat (cat.id)}
 				<button
-					onclick={() => (activeCategory = cat)}
-					class="border px-4 py-2 text-sm font-medium transition-colors {activeCategory === cat
+					onclick={() => (activeCategory = cat.id)}
+					class="border px-4 py-2 text-sm font-medium transition-colors {activeCategory === cat.id
 						? 'border-primary bg-primary text-primary-foreground'
 						: 'border-border text-muted-foreground hover:border-foreground hover:text-foreground'}"
 				>
-					{categoryLabel(cat)}
-					{#if cat !== 'all'}
-						<span class="ml-1.5 text-xs opacity-60">
-							({allImages.filter((img) => img.categoryId === cat).length})
-						</span>
-					{:else}
-						<span class="ml-1.5 text-xs opacity-60">({allImages.length})</span>
-					{/if}
+					{cat.label}
+					<span class="ml-1.5 text-xs opacity-60">
+						({allImages.filter((img) => img.categoryId === cat.id).length})
+					</span>
 				</button>
 			{/each}
 		</div>
