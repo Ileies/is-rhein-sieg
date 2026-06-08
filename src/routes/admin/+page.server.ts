@@ -1,5 +1,5 @@
 import { fail } from '@sveltejs/kit';
-import { existsSync, unlinkSync, writeFileSync } from 'fs';
+import { existsSync, mkdirSync, unlinkSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { getReferencesData, saveReferencesData, imagesDir } from '$lib/server/references';
 import type { Actions, PageServerLoad } from './$types';
@@ -95,7 +95,9 @@ export const actions: Actions = {
 		const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
 		const filename = `${Date.now()}_${safeName}`;
 
-		writeFileSync(join(imagesDir(), filename), Buffer.from(await file.arrayBuffer()));
+		const dir = imagesDir();
+		mkdirSync(dir, { recursive: true });
+		writeFileSync(join(dir, filename), Buffer.from(await file.arrayBuffer()));
 
 		data.images.push({ filename, categoryId, alt: alt || safeName });
 		saveReferencesData(data);

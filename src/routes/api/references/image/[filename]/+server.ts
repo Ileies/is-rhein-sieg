@@ -19,7 +19,10 @@ export function GET({ params }: { params: { filename: string } }) {
 		error(400, 'Invalid filename');
 	}
 
-	const filepath = join(imagesDir(), filename);
+	let filepath = join(imagesDir(), filename);
+	if (!existsSync(filepath)) {
+		filepath = join(process.cwd(), 'static', 'references', filename);
+	}
 
 	if (!existsSync(filepath)) {
 		error(404, 'Image not found');
