@@ -38,6 +38,19 @@ Locale is set via the `LOCALE` cookie, applied in `src/hooks.server.ts` using `A
 
 `/kontakt` uses a SvelteKit form action (`+page.server.ts`). It validates input server-side, enforces rate limiting (3 submissions per IP per hour, in-memory), and sends email via Nodemailer. No database required.
 
+### Gallery / References
+
+Gallery data is stored in two places under `data/` (at the project root):
+
+- `data/references.json` - JSON file with categories and image metadata (`ReferencesData` type in `src/lib/server/references.ts`)
+- `data/references/` - directory containing the actual image files
+
+Both paths can be overridden via env vars `REFERENCES_DATA_FILE` and `REFERENCES_DIR` respectively.
+
+### Admin Route
+
+`/admin` is a password-protected gallery management interface. HTTP Basic Auth is enforced in `hooks.server.ts` using the `ADMIN_PASSWORD` env var. It allows uploading, categorising, editing, and deleting reference images.
+
 ### Security Headers
 
 `hooks.server.ts` adds `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, and `Referrer-Policy` on all responses. The `/api/*` routes also enforce same-origin CSRF checks on non-safe methods.
@@ -65,11 +78,14 @@ Use Tailwind semantic tokens (`bg-background`, `text-foreground`, `text-primary`
 
 See `.env.example`. Required at runtime:
 
-| Variable    | Purpose                                   |
-| ----------- | ----------------------------------------- |
-| `SMTP_HOST` | SMTP server hostname                      |
-| `SMTP_PORT` | SMTP port (587 for STARTTLS, 465 for SSL) |
-| `SMTP_USER` | SMTP authentication username              |
-| `SMTP_PASS` | SMTP authentication password              |
-| `MAIL_FROM` | Sender address shown in outgoing email    |
-| `MAIL_TO`   | Recipient for contact form submissions    |
+| Variable               | Purpose                                         |
+| ---------------------- | ----------------------------------------------- |
+| `ADMIN_PASSWORD`       | Password for `/admin` HTTP Basic Auth (required)|
+| `SMTP_HOST`            | SMTP server hostname                            |
+| `SMTP_PORT`            | SMTP port (587 for STARTTLS, 465 for SSL)       |
+| `SMTP_USER`            | SMTP authentication username                    |
+| `SMTP_PASS`            | SMTP authentication password                    |
+| `MAIL_FROM`            | Sender address shown in outgoing email          |
+| `MAIL_TO`              | Recipient for contact form submissions          |
+| `REFERENCES_DIR`       | Override path for gallery image files (optional)|
+| `REFERENCES_DATA_FILE` | Override path for references.json (optional)    |
