@@ -21,7 +21,7 @@ export type ReferencesData = {
 };
 
 export function imagesDir(): string {
-	return env.REFERENCES_DIR ?? join(process.cwd(), 'static', 'references');
+	return env.REFERENCES_DIR ?? join(process.cwd(), 'data', 'references');
 }
 
 function dataFilePath(): string {

@@ -1,38 +1,58 @@
 import { $ } from 'bun';
+import { access, writeFile } from 'fs/promises';
 
 const SSH_HOST = 'hosting212287@202.61.233.108';
-const REMOTE_DIR = '~/insektenschutz-rhein-sieg.de';
+const REMOTE_DIR = '/insektenschutz-rhein-sieg.de';
+const LOCAL_ARCHIVE = './build.tar.gz';
+const REMOTE_ARCHIVE = '/tmp/insektenschutz-build.tar.gz';
+
+async function remote(command: string) {
+	await $`ssh ${SSH_HOST} ${command}`;
+}
 
 try {
-	// app.js: CJS wrapper so Passenger finds the default startup file without needing package.json
-	await Bun.write('./build/app.js', `import('./index.js');\n`);
-	// package.json still needed for "type: module" when Passenger does read it
-	await Bun.write('./build/package.json', JSON.stringify({ main: 'app.js', type: 'module' }, null, '\t') + '\n');
+	try {
+		await access('build/index.js');
+	} catch {
+		throw new Error('Build output not found at build/index.js — run bun run build first');
+	}
 
-	// Create tmp/restart.txt to trigger Passenger app restart
-	console.log('Creating tmp/restart.txt...');
-	await $`mkdir -p ./build/tmp && touch ./build/tmp/restart.txt`;
+	console.log('Preparing build directory...');
+	await writeFile(
+		'build/app.js',
+		"try { process.loadEnvFile('.env'); } catch {}\nimport('./index.js');\n"
+	);
+	await writeFile(
+		'build/package.json',
+		JSON.stringify({ main: 'app.js', type: 'module' }, null, '\t') + '\n'
+	);
 
-	// Compress build directory
 	console.log('Compressing build directory...');
-	await $`tar -czf ./build.tar.gz -C ./build .`;
+	await $`tar -czf ${LOCAL_ARCHIVE} -C build .`;
 
-	// Upload compressed build
 	console.log('Uploading compressed build...');
-	await $`scp ./build.tar.gz ${SSH_HOST}:/tmp/build.tar.gz`;
+	await $`scp ${LOCAL_ARCHIVE} ${SSH_HOST}:${REMOTE_ARCHIVE}`;
 
-	// Clean remote directory and extract build
-	console.log('Deploying on server...');
-	await $`ssh ${SSH_HOST} "rm -rf ${REMOTE_DIR}/* && tar -xzf /tmp/build.tar.gz -C ${REMOTE_DIR} && rm /tmp/build.tar.gz"`;
+	console.log('Cleaning remote directory (preserving data/)...');
+	await remote(`mkdir -p ${REMOTE_DIR}`);
+	await remote(`find ${REMOTE_DIR} -mindepth 1 -maxdepth 1 ! -name 'data' -exec rm -rf {} +`);
 
-	// Clean up local archive
-	console.log('Cleaning up...');
-	await $`rm ./build.tar.gz`;
+	console.log('Extracting build on server...');
+	await remote(`tar -xzf ${REMOTE_ARCHIVE} -C ${REMOTE_DIR}`);
+
+	console.log('Uploading environment file...');
+	await $`scp .env ${SSH_HOST}:${REMOTE_DIR}/.env`;
+
+	console.log('Cleaning up temporary files...');
+	await remote(`rm -f ${REMOTE_ARCHIVE}`);
+	await $`rm -f ${LOCAL_ARCHIVE}`;
+
+	console.log('Restarting application...');
+	await remote(`mkdir -p ${REMOTE_DIR}/tmp && touch ${REMOTE_DIR}/tmp/restart.txt`);
 
 	console.log('Deployment completed successfully!');
 } catch (error) {
 	console.error('Deployment failed:', error instanceof Error ? error.message : String(error));
-	// Clean up local archive if it exists
-	await $`rm -f ./build.tar.gz`.nothrow();
+	await $`rm -f ${LOCAL_ARCHIVE}`.nothrow();
 	process.exit(1);
 }
