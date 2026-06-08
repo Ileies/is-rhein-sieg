@@ -1,6 +1,5 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
-import { env } from '$env/dynamic/private';
 
 export type Category = {
 	id: string;
@@ -21,11 +20,11 @@ export type ReferencesData = {
 };
 
 export function imagesDir(): string {
-	return env.REFERENCES_DIR ?? join(process.cwd(), 'data', 'references');
+	return join(process.cwd(), 'data', 'references');
 }
 
 function dataFilePath(): string {
-	return env.REFERENCES_DATA_FILE ?? join(process.cwd(), 'data', 'references.json');
+	return join(process.cwd(), 'data', 'references.json');
 }
 
 export function getReferencesData(): ReferencesData {

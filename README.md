@@ -56,8 +56,6 @@ The dev server runs at `http://localhost:5173`.
 | `SMTP_PASS`            | `secret`                                    | SMTP authentication password                     |
 | `MAIL_FROM`            | `"Insektenschutz Rhein-Sieg <noreply@...>"` | Sender shown in outgoing mail                    |
 | `MAIL_TO`              | `info@insektenschutz-rhein-sieg.de`         | Recipient for contact form submissions           |
-| `REFERENCES_DIR`       | `/var/data/references`                      | Override path for gallery images (optional)      |
-| `REFERENCES_DATA_FILE` | `/var/data/references.json`                 | Override path for gallery JSON (optional)        |
 
 ---
 
