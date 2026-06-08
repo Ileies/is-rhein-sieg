@@ -1,6 +1,6 @@
 ## Context
 
-This project is the website for **Insektenschutz Rhein-Sieg** (Taner Özyurt, Sankt Augustin) — a regional insect screen installation business in the Rhein-Sieg-Kreis, NRW. The site is built as a fast, DSGVO-compliant SvelteKit SSR application.
+This project is the website for **Insektenschutz Rhein-Sieg** (Taner Özyurt, Sankt Augustin) - a regional insect screen installation business in the Rhein-Sieg-Kreis, NRW. The site is built as a fast, DSGVO-compliant SvelteKit SSR application.
 
 ---
 
@@ -8,7 +8,7 @@ This project is the website for **Insektenschutz Rhein-Sieg** (Taner Özyurt, Sa
 
 - **Language**: TypeScript
 - **Package Manager**: bun
-- **Framework**: SvelteKit 5 (Svelte 5, runes mode enforced — no legacy `$:` reactive statements or `export let` props)
+- **Framework**: SvelteKit 5 (Svelte 5, runes mode enforced - no legacy `$:` reactive statements or `export let` props)
 - **Styling**: Tailwind CSS v4 + shadcn-svelte (bits-ui)
 - **Adapter**: `@sveltejs/adapter-node` (SSR, deployed as a Node.js process)
 - **i18n**: Custom Vite plugin (`src/lib/i18n-plugin.ts`)
@@ -20,7 +20,7 @@ This project is the website for **Insektenschutz Rhein-Sieg** (Taner Özyurt, Sa
 
 ### Svelte 5 Runes
 
-`svelte.config.js` forces runes mode for all project files. Use `$state`, `$derived`, `$effect`, `$props()` — never legacy syntax.
+`svelte.config.js` forces runes mode for all project files. Use `$state`, `$derived`, `$effect`, `$props()` - never legacy syntax.
 
 ### i18n
 
@@ -54,8 +54,8 @@ The design departs from the original gold palette and uses a **blue-steel** sche
 | `--background` | `#f5f8fa`        | `#0e1920` |
 | `--foreground` | `#0d1a24`        | `#ffffff` |
 | `--border`     | `#cddde8`        | `#1e3a52` |
-| `--radius`     | `0rem`           | —         |
-| Font           | DM Sans Variable | —         |
+| `--radius`     | `0rem`           | -         |
+| Font           | DM Sans Variable | -         |
 
 Use Tailwind semantic tokens (`bg-background`, `text-foreground`, `text-primary`, `border-border`) rather than raw hex values.
 

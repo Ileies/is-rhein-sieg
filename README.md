@@ -1,6 +1,6 @@
 # Insektenschutz Rhein-Sieg
 
-Website for **Insektenschutz Rhein-Sieg** (Taner Özyurt, Sankt Augustin) — a regional insect screen installation business in the Rhein-Sieg-Kreis, NRW.
+Website for **Insektenschutz Rhein-Sieg** (Taner Özyurt, Sankt Augustin) - a regional insect screen installation business in the Rhein-Sieg-Kreis, NRW.
 
 **Live site:** insektenschutz-rhein-sieg.de
 
@@ -82,7 +82,7 @@ src/
   lib/
     components/        # Shared UI components (Header, Footer, …)
     i18n-plugin.ts     # Vite plugin: watches messages/, generates messages.ts
-    messages.ts        # Auto-generated — do not edit
+    messages.ts        # Auto-generated - do not edit
     server/
       rate-limiter.ts  # In-memory rate limiter for contact form
   routes/
